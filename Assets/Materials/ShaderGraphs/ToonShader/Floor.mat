@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Floor
-  m_Shader: {fileID: -6465566751694194690, guid: c032ad328248c2c4f8ca63228cc5d77f,
+  m_Shader: {fileID: -6465566751694194690, guid: 8197ba58620f4dd4686797be88a75b71,
     type: 3}
   m_Parent: {fileID: 2100000, guid: cfb7af7891a21bd4684c18f327ae10d0, type: 2}
   m_ModifiedSerializedProperties: 0
@@ -28,7 +28,7 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _Color: {r: 0.9103774, g: 0.98941684, b: 1, a: 0}
+    - _Color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5340751843938733636
 MonoBehaviour:
