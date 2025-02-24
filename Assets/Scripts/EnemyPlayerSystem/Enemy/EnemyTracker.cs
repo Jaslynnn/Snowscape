@@ -1,11 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
+/// <summary>
+/// This script tracks things that happen to the enemy not the player
+/// </summary>
 public class EnemyTracker : MonoBehaviour
 {
     [SerializeField] BaseEnemyTranslation EnemyTranslationType;
     BaseEnemyTranslation EnemyTranslation;
+    public List<EnemyTranslationTableEntry> enemies = new List<EnemyTranslationTableEntry>();
+    public bool enemyExistsAlready = false;
+
+    // Linking scripts 
+    public PlayerClass playerClass;
+    public CurrentEnemyClass currentEnemyClass;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -13,9 +23,70 @@ public class EnemyTracker : MonoBehaviour
 
     }
 
-    public void TakeDamage(string enemyName, int damage, string enemyTag)
+    public void TakeDamage(GameObject enemy, int damage, string enemyTag)
     {
-        EnemyTranslation.TakeDamage(enemyName, damage, enemyTag);
+        //Checks through the list of classes to see whether the enemy name exists
+        Debug.Log(enemy);
+        enemies.RemoveAll(entry => entry == null || entry.EnemyObject == null || entry.EnemyHealth <= 0);
+        foreach (EnemyTranslationTableEntry entry in enemies.ToList())
+        {
+
+            if (entry.EnemyObject == null || !entry.EnemyObject.activeInHierarchy) // Also checks if the enemy is inactive
+            {
+                // Remove the destroyed enemy from the list
+                enemies.Remove(entry);
+                continue; // Skip processing this entry since it's already destroyed
+            }
+
+            if (entry.EnemyObject == enemy)
+            {
+
+                currentEnemyClass.attackedEnemyHealth = entry.EnemyHealth;
+                //int currentEnemyHealth = entry.EnemyHealth;
+                entry.EnemyHealth -= damage;
+              currentEnemyClass.attackedEnemyHealth = entry.EnemyHealth;
+                //***Add abit of force here to make the object shake so that player gets the hint to keep on hitting it
+                if (entry.EnemyHealth <= 0) 
+                {
+
+                    //***Place destruction code here
+                    enemies.Remove(entry);
+                    entry.EnemyObject.SetActive(false);
+                    playerClass.EnemyDefeatedCounter += 1;
+
+
+
+                }
+                return;
+
+            }
+              
+         
+                    
+            
+
+                
+        }
+       
+        if (enemy) 
+        {
+            EnemyTranslationTableEntry enemy01 = EnemyTranslation.TakeDamage(enemy, damage, enemyTag);
+
+            if (enemy01 != null && enemy01.EnemyHealth > 0 && !enemies.Contains(enemy01))
+            {
+                enemies.Add(enemy01);
+            currentEnemyClass.attackedEnemyHealth = enemy01.EnemyHealth;
+            }
+        }
+
+
+        //Adds new class to the list of classes:\
+        //returns the enemyHealth
+        //EnemyTranslation.TakeDamage(enemyName, damage, enemyTag);
     }
+
+
+
+
 
 }

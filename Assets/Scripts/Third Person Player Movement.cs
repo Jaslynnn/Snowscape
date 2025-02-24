@@ -15,7 +15,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private readonly float[] allowedAngles = { 0f, 45f, 90f, 135f, 180f, -135f, -90f, -45f };
 
-    void Update()
+    public void PlayerMovement()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");

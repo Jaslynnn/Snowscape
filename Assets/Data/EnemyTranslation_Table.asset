@@ -15,18 +15,22 @@ MonoBehaviour:
   itemDroppedList: 
   Table:
   - EnemyName: Fiend
-    EnemyHealth: 100
+    EnemyObject: {fileID: 0}
+    EnemyHealth: 30
     Type: 1
     itemDroppedList: 01000000020000000300000004000000
   - EnemyName: FiendNest
-    EnemyHealth: 100
+    EnemyObject: {fileID: 0}
+    EnemyHealth: 50
     Type: 2
     itemDroppedList: 00000000
   - EnemyName: Tree
+    EnemyObject: {fileID: 0}
     EnemyHealth: 60
     Type: 3
     itemDroppedList: 05000000
   - EnemyName: Rock
+    EnemyObject: {fileID: 0}
     EnemyHealth: 40
     Type: 3
     itemDroppedList: 05000000

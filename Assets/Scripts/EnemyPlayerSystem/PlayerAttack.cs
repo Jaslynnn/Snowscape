@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Cinemachine;
+using Unity.PlasticSCM.Editor.WebApi;
+using static UnityEditor.Progress;
+using UnityEditor.AI;
+using Unity.AI;
+using Unity.AI.Navigation;
 /// <summary>
 /// This script 
+/// Select the closest item/ enemy to the player 
 /// if the player collides into smth, add it to list
 /// if player presses mouse click to attack,
 /// if tag == fiend , foreach item in fiend list, search and deduct health points
@@ -23,6 +29,13 @@ public class PlayerAttack : MonoBehaviour
 
     public LayerMask Destructables;
     public GameObject playerMesh;
+    //public GameObject currentEnemy;
+    //public GameObject currentGrabObject;
+    public GameObject objectToolTipUI;
+    public GameObject playerGrabPoint;
+    public NavMeshSurface navMeshSurface;
+
+    public bool selectedObject;
 
     public float hitDistance = 2f;
     [SerializeField] LayerMask layermask;
@@ -34,14 +47,50 @@ public class PlayerAttack : MonoBehaviour
     public List<GameObject> rayCastedItems = new List<GameObject>();
     public GameObject[] DestructionPieces;
     public GameObject itemParent;
+    public bool attackedEnemy;
+    public bool grabbedObject;
+
+    //Lists for enemies/Things attacked
+    //public List<EnemyTranslationTableEntry> enemies = new List<EnemyTranslationTableEntry>();
+
+    [Header("Linked scripts")]
+    //Attached Scripts
+    [SerializeField] BaseEnemyTranslation EnemyTranslationType;
+    BaseEnemyTranslation EnemyTranslation;
+    public EnemyTracker enemyTracker;
+    public PlayerClass playerClass;
+    public ThirdPersonMovement thirdPersonMovement;
+    public Coroutine AttackEnemyCoroutine;
+    public GameController gameController;
+    public CurrentEnemyClass currentEnemyClass;
+
+    public enum PlayerActionStates
+    {
+        Null, 
+        Attack, 
+        Defense
+    }
+
+    public PlayerActionStates ActionState;
+
+
+    private void Awake()
+    {
+        EnemyTranslation = ScriptableObject.Instantiate(EnemyTranslationType);
+        
+      
+    }
 
     public void OnTriggerEnter(Collider collision)
     {
+        if (gameController.State == GameController.GameStateEnums.Tutorial || gameController.State == GameController.GameStateEnums.Started)
+        {
 
-        //CollisionItemParent = collision.transform.parent.gameObject;
+
+            //CollisionItemParent = collision.transform.parent.gameObject;
 
 
-        collidedItems.Add(collision.gameObject);
+            collidedItems.Add(collision.gameObject);
 
 
 
@@ -54,13 +103,20 @@ public class PlayerAttack : MonoBehaviour
         }
 
 
+
+        }
+
     }
     public void OnTriggerStay(Collider collision)
     {
+        if (gameController.State == GameController.GameStateEnums.Tutorial || gameController.State == GameController.GameStateEnums.Started)
+        {
 
-        //Debug.Log("This is the layer number" + layer);
-        //for each item that is collided to, add to list make red and add a raycast, then take the raycast distance that is the shortest and make dark red
-        for (int i = 0; i < collidedItems.Count; i++)
+
+
+            //Debug.Log("This is the layer number" + layer);
+            //for each item that is collided to, add to list make red and add a raycast, then take the raycast distance that is the shortest and make dark red
+            for (int i = 0; i < collidedItems.Count; i++)
         {
             GameObject item = collidedItems[i];
 
@@ -82,9 +138,11 @@ public class PlayerAttack : MonoBehaviour
                     if (!rayCastedItems.Contains(hit.transform.gameObject))
                     {
                         rayCastedItems.Add(hit.transform.gameObject);
+                        SelectClosestEnemy();
+                        ShowActionTooltipUI(currentEnemyClass.currentEnemy);
                         //ShowDestroyTooltipUI(hit.transform.gameObject);
                         //OldColor = lastHighlighted.GetComponent<Renderer>().material.color;
-                        hit.transform.GetComponent<Renderer>().material.color = Color.red;
+                        //hit.transform.GetComponent<Renderer>().material.color = Color.red;
                     }
                     //lastHighlighted.GetComponent<Renderer>().material.color = OldColor;
                     //myVector1 - myVector2).normalized
@@ -93,7 +151,7 @@ public class PlayerAttack : MonoBehaviour
                     //Debug.DrawRay(playerMesh.transform.position, -(playerMesh.transform.position - item.transform.position).normalized * hit.distance, Color.red);
                     if(hit.distance < hitDistance)
                     {
-                        print(hit.distance);
+                        //print(hit.distance);
                     Debug.DrawRay(playerMesh.transform.position, -(playerMesh.transform.position - item.transform.position).normalized * hit.distance, Color.blue);
 
                     }
@@ -103,7 +161,7 @@ public class PlayerAttack : MonoBehaviour
                 else
                 {
                     //lastHighlighted.GetComponent<Renderer>().material.color = OldColor;
-                    item.GetComponent<Renderer>().material.color = Color.blue;
+                    //item.GetComponent<Renderer>().material.color = Color.blue;
                     rayCastedItems.Remove(item);
                 }
 
@@ -114,19 +172,209 @@ public class PlayerAttack : MonoBehaviour
 
 
         }
+
+        ChangeActionState();
+
+        }
+
+
     }
+
+
+
+    public void ChangeActionState()
+    {
+        switch (ActionState)
+        {
+            case PlayerActionStates.Null:
+
+                //%%TestingLIne only
+                ActionState = PlayerActionStates.Attack;
+                //If game started, then change to the attack state;
+
+                break;
+
+            case PlayerActionStates.Attack:
+                thirdPersonMovement.speed = 6f;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    //Change the state here
+                    //Debug.Log("Attacking" + currentEnemy);
+                    attackedEnemy = true;
+                    AttackEnemyCoroutine = StartCoroutine(AttackCurrentEnemy());
+                }
+                if (Input.GetMouseButtonDown(1))
+                {
+                    StartCoroutine(GrabCurrentEnemy()); 
+                    
+
+                }
+                    break;
+
+            case PlayerActionStates.Defense:
+                //Reduce the speed of the player and prevent it from recieving damage from the enemy
+                thirdPersonMovement.speed = 1f;
+                if (Input.GetMouseButtonDown(1))
+                {
+                    StartCoroutine(ReleaseCurrentEnemy());
+
+                }
+
+                
+                break;
+        }
+    }
+
+
+
+    
+
+    //Attack the first item in the raycasted list
+    //if the item already existed in the attacked enemies, check the type of the item, if fiend then etc ....
+    //then grab the health and do damage to the health using the already created function in the base enemies translation table
+    //else Create a class by detecting the tag of that item, add it to a list of the enemy classes
+    //Make each item take damage, use the already created function , turn it into a health bar
+    public void SelectClosestEnemy()
+    {
+        if (rayCastedItems.Count > 0 )
+        {
+
+            currentEnemyClass.currentEnemy = rayCastedItems[rayCastedItems.Count - 1];
+        
+            selectedObject = true;
+            
+        }
+
+     
+
+
+    }
+
+    //Make this an ienumerator so that there is a cool down when attacking so that the player cannot spam the attack button
+
+    public IEnumerator AttackCurrentEnemy()
+    {
+        //Play player attacking animation
+        yield return new WaitForSeconds(.2f);
+        if (attackedEnemy)
+        {
+            currentEnemyClass.attackedEnemy = currentEnemyClass.currentEnemy;
+            currentEnemyClass.currentEnemy.GetComponent<Renderer>().material.color = Color.white;
+            enemyTracker.TakeDamage(currentEnemyClass.currentEnemy.gameObject, playerClass.PlayerDamageValue, currentEnemyClass.currentEnemy.tag);
+            if (!currentEnemyClass.attackedEnemy.CompareTag("Fiend") )
+            {
+                if(currentEnemyClass.attackedEnemyHealth <= 0)
+                {
+            Fragmentation(currentEnemyClass.attackedEnemy);
+
+                }
+            }
+            attackedEnemy = false;
+        }
+    }
+
+    public IEnumerator GrabCurrentEnemy()
+    {
+        yield return new WaitForSeconds(.2f);
+        
+        if (!grabbedObject)
+        {
+            playerClass.currentGrabbedObject = currentEnemyClass.currentEnemy.gameObject;
+            var PlayerOffset = new Vector3(playerGrabPoint.transform.position.x, playerGrabPoint.transform.position.y , playerMesh.transform.position.z + (playerMesh.transform.localScale.z / 2) + (playerClass.currentGrabbedObject.transform.localScale.z / 2) + (playerGrabPoint.transform.localScale.z / 2));
+            playerClass.currentGrabbedObject.transform.position = PlayerOffset;
+            BakeNavMesh();
+
+            playerClass.currentGrabbedObject.transform.parent = playerMesh.transform;
+            playerClass.currentGrabbedObject.transform.rotation = playerMesh.transform.rotation;
+           
+          ActionState = PlayerActionStates.Defense;
+            grabbedObject = true;
+            
+            //*** If tag == fiend Play the current Enemy struggling animation here
+
+            if (playerClass.currentGrabbedObject.CompareTag("Fiend")) 
+            {
+                UnityEngine.AI.NavMeshAgent Agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+                Agent.enabled = false;
+            
+            }
+        }
+
+    }
+
+    public IEnumerator ReleaseCurrentEnemy()
+    {
+        yield return new WaitForSeconds(.2f);
+        if (grabbedObject)
+        {
+            playerClass.currentGrabbedObject.transform.parent = null;
+            
+            ActionState = PlayerActionStates.Attack;
+
+            if (playerClass.currentGrabbedObject.CompareTag("Fiend"))
+            {
+                UnityEngine.AI.NavMeshAgent Agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+                Agent.enabled = true;
+
+            }
+
+            playerClass.currentGrabbedObject = null;
+        grabbedObject = false;
+            BakeNavMesh();
+
+        }
+    }
+
+    public void BakeNavMesh()
+
+    {
+
+        if (navMeshSurface != null)
+
+        {
+
+            navMeshSurface.BuildNavMesh();
+        }
+
+    }
+
+
+    public void ShowActionTooltipUI(GameObject item)
+    {
+        //Parent it under the gaemObject item
+        if (selectedObject == true)
+        {
+        var AboveItem = new Vector3(item.transform.position.x, item.transform.position.y + (item.transform.position.y / 2) + 2.5f, item.transform.position.z);
+        var SelectedItemUI = Instantiate(objectToolTipUI, AboveItem, transform.rotation);
+            SelectedItemUI.transform.parent = item.transform;
+            selectedObject = false;
+            if (currentEnemyClass.currentEnemy != null)
+            {
+            Destroy(SelectedItemUI, 2f);
+            }
+
+        }
+        
+        //display the tooltip
+
+    }
+
 
     public void OnTriggerExit(Collider collision)
     {
         if (Destructables == (Destructables | (1 << collision.gameObject.layer)))
         {
 
-            lastHighlighted.GetComponent<Renderer>().material.color = Color.blue;
+            //lastHighlighted.GetComponent<Renderer>().material.color = Color.blue;
         }
+        lastHighlighted = currentEnemyClass.currentEnemy;
         rayCastedItems.RemoveAll(s => s == null);
         collidedItems.Remove(collision.gameObject);
 
     }
+
+
+
 
     public void Fragmentation(GameObject item)
     {
@@ -190,4 +438,7 @@ public class PlayerAttack : MonoBehaviour
 
 
     }
+
+
+
 }

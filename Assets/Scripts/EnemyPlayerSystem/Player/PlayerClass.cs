@@ -5,13 +5,14 @@ using UnityEngine;
 public class PlayerClass : MonoBehaviour
 {
     public string PlayerName;
-    public int PlayerHealth;
-    public int PlayerDamageValue;
+    public int PlayerHealth = 100;
+    public int PlayerDamageValue = 10;
+    public GameObject currentGrabbedObject;
     public int EnemyDefeatedCounter;
     public bool Quest1 = false;
     public bool Quest2 = false;
 
-    public PlayerClass( string playerName, int playerHealth , int playerDamageValue , int enemyDefeatedCounter , bool quest1 , bool quest2 )
+    /*public PlayerClass( string playerName, int playerHealth , int playerDamageValue , int enemyDefeatedCounter , bool quest1 , bool quest2 )
     {
         this.PlayerName = playerName;
         this.PlayerHealth = playerHealth;
@@ -20,6 +21,6 @@ public class PlayerClass : MonoBehaviour
         this.Quest1 = quest1;
         this.Quest2 = quest2;
     }
-
+    */
 
 }
