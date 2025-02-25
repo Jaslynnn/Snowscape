@@ -23,12 +23,15 @@ public class UIManager : MonoBehaviour
     public TMP_Text enemyName;
     public TMP_Text attackedEnemy;
     public TMP_Text attackedEnemyHP;
+    public TMP_Text enemiesLeft;
+
 
     [Header("GameState")]
     public TMP_Text currentGameState;
 
     [Header("GameUI")]
     public GameObject GameOverPage;
+    public GameObject Level1CompletedPage;
 
 
     [Header("Linked scripts")]
@@ -55,6 +58,7 @@ public class UIManager : MonoBehaviour
 
         playerAction.text = "Action:" + playerAttack.ActionState.ToString();
         enemyDefeatedCount.text = "Defeated" + playerClass.EnemyDefeatedCounter.ToString();
+        enemiesLeft.text = "Killed E: " + playerClass.EnemyDefeatedCounter.ToString() + " / " + currentEnemyClass.totalNoOfFiends.ToString();
         if (currentEnemyClass.currentEnemy != null)
         {
 
@@ -88,6 +92,16 @@ public class UIManager : MonoBehaviour
         if (gameController.State != GameController.GameStateEnums.Ended)
         {
             GameOverPage.SetActive(false);
+
+        }
+        if (gameController.Level == GameController.LevelsStateEnums.Level1)
+        {
+            Level1CompletedPage.SetActive(true);
+
+        }
+        if (gameController.Level != GameController.LevelsStateEnums.Level1)
+        {
+            Level1CompletedPage.SetActive(false);
 
         }
     }

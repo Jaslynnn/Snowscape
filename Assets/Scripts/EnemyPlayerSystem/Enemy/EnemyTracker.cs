@@ -52,7 +52,11 @@ public class EnemyTracker : MonoBehaviour
                     //***Place destruction code here
                     enemies.Remove(entry);
                     entry.EnemyObject.SetActive(false);
+                    if (entry.EnemyObject.CompareTag("Fiend"))
+                    {
                     playerClass.EnemyDefeatedCounter += 1;
+
+                    }
 
 
 

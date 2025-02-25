@@ -259,12 +259,17 @@ public class PlayerAttack : MonoBehaviour
         if (attackedEnemy)
         {
             currentEnemyClass.attackedEnemy = currentEnemyClass.currentEnemy;
-            currentEnemyClass.currentEnemy.GetComponent<Renderer>().material.color = Color.white;
+            //currentEnemyClass.currentEnemy.GetComponent<Renderer>().material.color = Color.white;
             enemyTracker.TakeDamage(currentEnemyClass.currentEnemy.gameObject, playerClass.PlayerDamageValue, currentEnemyClass.currentEnemy.tag);
             if (!currentEnemyClass.attackedEnemy.CompareTag("Fiend") )
             {
                 if(currentEnemyClass.attackedEnemyHealth <= 0)
                 {
+                if(playerClass.PlayerHealth <= 100)
+                    {
+                        playerClass.PlayerHealth += 10;
+                    }
+
             Fragmentation(currentEnemyClass.attackedEnemy);
 
                 }

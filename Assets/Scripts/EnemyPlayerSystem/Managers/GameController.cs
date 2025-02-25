@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     [Header("Linked scripts")]
     //Scripts to be linked
     public PlayerClass playerClass;
+    public CurrentEnemyClass currentEnemyClass;
     public ThirdPersonMovement thirdPersonMovement;
     public UIManager uiManager;
 
@@ -34,17 +35,32 @@ public class GameController : MonoBehaviour
         Ended
     }
 
+    public enum LevelsStateEnums
+    {
+        None,
+        Level1,
+        Level2,
+        Level3,
+    }
     public enum TutorialStateEnums
     {
 
     }
 
     public GameStateEnums State;
+    public LevelsStateEnums Level;
 
+    void Awake()
+    {
+        CountTotalFiends();
+    }
     void Update()
     {
         ChangeGameState();
         uiManager.UpdateTestUI();
+        CheckAllFiendsDead();
+
+
     }
 
     public void ChangeGameState()
@@ -97,6 +113,9 @@ public class GameController : MonoBehaviour
 
     }
 
+
+    //State Changing Functions
+    //Attached to a button
     public void NotStartedGame()
     {
         //Attached to a button
@@ -107,21 +126,15 @@ public class GameController : MonoBehaviour
 
 
     }
-    //Attached to a button
     public void StartGame()
     {
-        //Attached to a button
         State = GameStateEnums.Started;
-
-
     }
-
     public void StartTutorial ()
     {
         //Attached to a button
         State = GameStateEnums.Tutorial;
     }
-
     public void PauseGame()
     {
         //Attached to a button
@@ -133,6 +146,8 @@ public class GameController : MonoBehaviour
         State = GameStateEnums.Ended;
     }
 
+
+    //RUns through the asset loop to reshow everything again
     public void ReshowAllAssets()
     {
         AllAssetsArray = new GameObject[allTheAssets.transform.childCount];
@@ -145,8 +160,59 @@ public class GameController : MonoBehaviour
             Asset.SetActive(true);
         }
     }
+    public void CountTotalFiends()
+    {
+        AllAssetsArray = new GameObject[allTheAssets.transform.childCount];
+        for (int i = 0; i < AllAssetsArray.Length; i++)
+        {
+            AllAssetsArray[i] = allTheAssets.transform.GetChild(i).gameObject;
+        }
+        foreach (GameObject Asset in AllAssetsArray)
+        {
+            if (Asset.CompareTag("Fiend"))
+            {
+                currentEnemyClass.totalNoOfFiends += 1;
+            }
+            
+        }
+    }
 
+    public void CheckAllFiendsDead()
+    {
+        currentEnemyClass.currentNoOfFiends = playerClass.EnemyDefeatedCounter;
+       
+            switch (Level)
+            {
+                case LevelsStateEnums.None:
+                if (playerClass.EnemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
+                {
+                    Level = LevelsStateEnums.Level1;
 
+                    //Use sceneLoader to go to the next level
+                    playerClass.EnemyDefeatedCounter = 0;
+
+                }
+                    break;
+
+                case LevelsStateEnums.Level1:
+                if (playerClass.EnemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
+                {
+                    Level = LevelsStateEnums.Level2;
+                }
+                    break;
+
+                case LevelsStateEnums.Level2:
+                if (playerClass.EnemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
+                {
+                    Level = LevelsStateEnums.Level2;
+                }
+                    break;
+
+            }
+            //Take the totalFiends - playerClass.enemyDefeated
+            //If Fiends = 0 , Level 1 = true , show the congrats UI
+        
+    }
 
     public void PlayAgain()
     {
