@@ -51,11 +51,10 @@ public class EnemyNav : MonoBehaviour
             if (!playerInSightRange && !playerInAttackRange) Patroling();
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();
 
-                    if (playerAttack.ActionState == PlayerAttack.PlayerActionStates.Attack)
-                    {
-                        if (playerInAttackRange && playerInSightRange) AttackPlayer();
 
-                    }
+            if (playerInAttackRange && playerInSightRange) AttackPlayer();
+
+                   
         }
 
 

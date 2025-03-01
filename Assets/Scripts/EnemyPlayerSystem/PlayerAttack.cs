@@ -285,7 +285,14 @@ public class PlayerAttack : MonoBehaviour
         if (!grabbedObject)
         {
             playerClass.currentGrabbedObject = currentEnemyClass.currentEnemy.gameObject;
-            var PlayerOffset = new Vector3(playerGrabPoint.transform.position.x, playerGrabPoint.transform.position.y , playerMesh.transform.position.z + (playerMesh.transform.localScale.z / 2) + (playerClass.currentGrabbedObject.transform.localScale.z / 2) + (playerGrabPoint.transform.localScale.z / 2));
+            var PlayerOffset = new Vector3(playerGrabPoint.transform.position.x, playerGrabPoint.transform.position.y , playerMesh.transform.position.z + (playerClass.currentGrabbedObject.transform.localScale.z / 2) + (playerGrabPoint.transform.localScale.z / 2));
+            Rigidbody grabbedRb = playerClass.currentGrabbedObject.GetComponent<Rigidbody>();
+            if (!grabbedRb)
+            {
+                grabbedRb = playerClass.currentGrabbedObject.AddComponent<Rigidbody>();
+            }
+            grabbedRb.useGravity = false;
+            grabbedRb.constraints = RigidbodyConstraints.FreezeAll;
             playerClass.currentGrabbedObject.transform.position = PlayerOffset;
             BakeNavMesh();
 
@@ -309,13 +316,33 @@ public class PlayerAttack : MonoBehaviour
 
     public IEnumerator ReleaseCurrentEnemy()
     {
+            playerClass.currentGrabbedObject.transform.parent = null;
         yield return new WaitForSeconds(.2f);
         if (grabbedObject)
         {
-            playerClass.currentGrabbedObject.transform.parent = null;
-            
-            ActionState = PlayerActionStates.Attack;
+          
 
+            //Adds force when releasing the item
+            Rigidbody grabbedRb = playerClass.currentGrabbedObject.GetComponent<Rigidbody>();
+            if (!grabbedRb)
+            {
+                /*
+                Rigidbody pieceRbNew = piece.AddComponent<Rigidbody>();
+                Vector3 direction = pieceRbNew.transform.position - transform.position;
+                */
+                grabbedRb = playerClass.currentGrabbedObject.AddComponent<Rigidbody>();
+            }
+            grabbedRb.isKinematic = false;
+            grabbedRb.useGravity = true;
+            grabbedRb.constraints = RigidbodyConstraints.None;
+            // Calculate the direction and force to apply
+            Vector3 direction = grabbedRb.transform.position - transform.position;
+            direction.Normalize();  // Make sure the direction is normalized
+
+            // Add force in the direction
+            grabbedRb.AddForce(direction * 10f, ForceMode.Impulse);  // Adjust the force magnitude as needed
+       
+            Debug.Log($"Force applied with magnitude: {direction.magnitude * 1f}");
             if (playerClass.currentGrabbedObject.CompareTag("Fiend"))
             {
                 UnityEngine.AI.NavMeshAgent Agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -323,8 +350,10 @@ public class PlayerAttack : MonoBehaviour
 
             }
 
+            Debug.Log("huh");
             playerClass.currentGrabbedObject = null;
         grabbedObject = false;
+            ActionState = PlayerActionStates.Attack;
             BakeNavMesh();
 
         }
