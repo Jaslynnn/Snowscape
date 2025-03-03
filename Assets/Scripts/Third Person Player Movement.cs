@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
+    [SerializeField] Animator animator;
     public CharacterController controller;
     public float speed = 6f;
     public float turnSmoothTime = 0.1f;
@@ -20,7 +21,7 @@ public class ThirdPersonMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
+        animator = GetComponentInChildren<Animator>();
 
         Vector3 move = Vector3.zero; // Store final movement vector
 
@@ -47,6 +48,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
         // Apply both movement and gravity in a single call
         controller.Move((move + velocity) * Time.deltaTime);
+
+        // Update Animator
+        bool isWalking = direction.magnitude >= 0.1f;
+        animator.SetBool("YettyIsWalking", isWalking);
     }
 
 

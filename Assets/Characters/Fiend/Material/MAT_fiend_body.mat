@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fiend
+  m_Name: MAT_fiend_body
   m_Shader: {fileID: -6465566751694194690, guid: 3099d537f289f304fb43dbd2537da1c3,
     type: 3}
   m_Parent: {fileID: 0}
