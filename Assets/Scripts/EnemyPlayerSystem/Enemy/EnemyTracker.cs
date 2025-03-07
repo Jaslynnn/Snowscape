@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 
 /// <summary>
 /// This script tracks things that happen to the enemy not the player
@@ -12,10 +13,14 @@ public class EnemyTracker : MonoBehaviour
     BaseEnemyTranslation EnemyTranslation;
     public List<EnemyTranslationTableEntry> enemies = new List<EnemyTranslationTableEntry>();
     public bool enemyExistsAlready = false;
+    public Transform enemyHealthBarObject = null;
+    public TMP_Text enemyHealthText = null;
 
     // Linking scripts 
     public PlayerClass playerClass;
     public CurrentEnemyClass currentEnemyClass;
+
+    public EnemyHealthBar enemyHealthBar;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -54,7 +59,7 @@ public class EnemyTracker : MonoBehaviour
                     entry.EnemyObject.SetActive(false);
                     if (entry.EnemyObject.CompareTag("Fiend"))
                     {
-                    playerClass.EnemyDefeatedCounter += 1;
+                    playerClass.enemyDefeatedCounter += 1;
 
                     }
 
@@ -87,6 +92,34 @@ public class EnemyTracker : MonoBehaviour
         //Adds new class to the list of classes:\
         //returns the enemyHealth
         //EnemyTranslation.TakeDamage(enemyName, damage, enemyTag);
+        if (enemy.CompareTag("Fiend"))
+        {
+            
+        if (!enemyHealthBarObject)
+        {
+            enemyHealthBarObject = enemy.transform.Find("Canvas/EnemyHealthBar");
+            if (enemyHealthBarObject != null)
+            {
+                
+            Debug.Log(enemyHealthBarObject.gameObject.name);
+            enemyHealthBarObject.gameObject.SetActive(true);
+            enemyHealthBar.SetMaxHealth(currentEnemyClass.attackedEnemyHealth);
+            enemyHealthText.text = currentEnemyClass.attackedEnemyHealth.ToString();
+            }
+            //Set the current enemy health
+        }
+        
+        enemyHealthBarObject = enemy.transform.Find("EnemyHealthBar");
+        enemyHealthText = enemyHealthBarObject.Find("EnemyHealthNo").GetComponent<TMP_Text>();
+            
+            
+        }
+        
+
+
+   
+
+
     }
 
 

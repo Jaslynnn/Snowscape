@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ThirdPersonMovement : MonoBehaviour
@@ -8,12 +5,12 @@ public class ThirdPersonMovement : MonoBehaviour
     public CharacterController controller;
     public float speed = 6f;
     public float turnSmoothTime = 0.1f;
-    private float turnSmoothVelocity;
+    private float _turnSmoothVelocity;
 
     public float gravity = -9.81f;
-    private Vector3 velocity;
+    private Vector3 _velocity;
 
-    private readonly float[] allowedAngles = { 0f, 45f, 90f, 135f, 180f, -135f, -90f, -45f };
+    private readonly float[] _allowedAngles = { 0f, 45f, 90f, 135f, 180f, -135f, -90f, -45f };
 
     public void PlayerMovement()
     {
@@ -28,13 +25,13 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             float rawAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float targetAngle = FindClosestAllowedAngle(rawAngle);
-            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
         if (!controller.isGrounded)
         {
-            velocity.y = 0.01f;
+            _velocity.y = 0.01f;
             Vector3 fixedPosition = transform.position;
             fixedPosition.y = 0f; // Force the character to stay at ground level
             transform.position = fixedPosition;
@@ -43,20 +40,20 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         // Apply gravity
-        velocity.y += gravity * Time.deltaTime;
+        _velocity.y += gravity * Time.deltaTime;
 
         // Apply both movement and gravity in a single call
-        controller.Move((move + velocity) * Time.deltaTime);
+        controller.Move((move + _velocity) * Time.deltaTime);
     }
 
 
 
     private float FindClosestAllowedAngle(float rawAngle)
     {
-        float closestAngle = allowedAngles[0];
+        float closestAngle = _allowedAngles[0];
         float smallestDifference = Mathf.Abs(Mathf.DeltaAngle(rawAngle, closestAngle));
 
-        foreach (float allowedAngle in allowedAngles)
+        foreach (float allowedAngle in _allowedAngles)
         {
             float difference = Mathf.Abs(Mathf.DeltaAngle(rawAngle, allowedAngle));
             if (difference < smallestDifference)

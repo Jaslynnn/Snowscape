@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour
     public CurrentEnemyClass currentEnemyClass;
     public ThirdPersonMovement thirdPersonMovement;
     public UIManager uiManager;
+    public PlayerHealthBar playerHealthBar;
+    public EnemyHealthBar enemyHealthBar;
 
 
     public enum GameStateEnums
@@ -54,6 +56,8 @@ public class GameController : MonoBehaviour
     {
         CountTotalFiends();
     }
+
+   
     void Update()
     {
         ChangeGameState();
@@ -75,11 +79,11 @@ public class GameController : MonoBehaviour
 
             case GameStateEnums.Tutorial:
                 thirdPersonMovement.PlayerMovement();
-                if (playerClass.PlayerHealth <= 0)
+                if (playerClass.playerHealth <= 0)
                 {
                     Debug.Log("Health = 0");
                     State = GameStateEnums.Ended;
-                    playerClass.PlayerHealth = 0;
+                    playerClass.playerHealth = 0;
                     //uiManager.ChangeToGameEndedAnimationState();
                 }
                 //Play the tutorial
@@ -91,11 +95,11 @@ public class GameController : MonoBehaviour
                 thirdPersonMovement.PlayerMovement();
 
             
-                if (playerClass.PlayerHealth <= 0)
+                if (playerClass.playerHealth <= 0)
                 {
                     Debug.Log("GameEnded");
                     State = GameStateEnums.Ended;
-                    playerClass.PlayerHealth = 0;
+                    playerClass.playerHealth = 0;
                     //uiManager.ChangeToGameEndedAnimationState();
                 }
                 break;
@@ -119,8 +123,8 @@ public class GameController : MonoBehaviour
     public void NotStartedGame()
     {
         //Attached to a button
-        playerClass.PlayerHealth = 100;
-        playerClass.EnemyDefeatedCounter = 0;
+        playerClass.playerHealth = 100;
+        playerClass.enemyDefeatedCounter = 0;
         State = GameStateEnums.NotStarted;
         ReshowAllAssets();
 
@@ -179,30 +183,30 @@ public class GameController : MonoBehaviour
 
     public void CheckAllFiendsDead()
     {
-        currentEnemyClass.currentNoOfFiends = playerClass.EnemyDefeatedCounter;
+        currentEnemyClass.currentNoOfFiends = playerClass.enemyDefeatedCounter;
        
             switch (Level)
             {
                 case LevelsStateEnums.None:
-                if (playerClass.EnemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
+                if (playerClass.enemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
                 {
                     Level = LevelsStateEnums.Level1;
 
                     //Use sceneLoader to go to the next level
-                    playerClass.EnemyDefeatedCounter = 0;
+                    playerClass.enemyDefeatedCounter = 0;
 
                 }
                     break;
 
                 case LevelsStateEnums.Level1:
-                if (playerClass.EnemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
+                if (playerClass.enemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
                 {
                     Level = LevelsStateEnums.Level2;
                 }
                     break;
 
                 case LevelsStateEnums.Level2:
-                if (playerClass.EnemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
+                if (playerClass.enemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
                 {
                     Level = LevelsStateEnums.Level2;
                 }

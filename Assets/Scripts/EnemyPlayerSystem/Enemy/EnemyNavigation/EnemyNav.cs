@@ -25,7 +25,8 @@ public class EnemyNav : MonoBehaviour
     public PlayerClass playerClass;
     public PlayerAttack playerAttack;
     public GameController gameController;
-
+    public UIManager uiManager;
+    
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
@@ -37,7 +38,7 @@ public class EnemyNav : MonoBehaviour
     {
         if (gameController.State == GameController.GameStateEnums.Tutorial || gameController.State == GameController.GameStateEnums.Started)
         {
-            if(playerClass.PlayerHealth > 0)
+            if(playerClass.playerHealth > 0)
             {
 
 
@@ -132,8 +133,9 @@ public class EnemyNav : MonoBehaviour
     {
 
         alreadyAttacked = false;
-        playerClass.PlayerHealth -= 10;
-        Debug.Log(playerClass.PlayerHealth);
+        playerClass.playerHealth -= 10;
+        uiManager.UpdatePlayerHealthBar();
+        Debug.Log(playerClass.playerHealth);
 
     }
 

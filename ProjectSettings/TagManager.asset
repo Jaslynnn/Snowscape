@@ -9,6 +9,7 @@ TagManager:
   - FiendNest
   - Tree
   - Rock
+  - EnemyHealthBar
   layers:
   - Default
   - TransparentFX

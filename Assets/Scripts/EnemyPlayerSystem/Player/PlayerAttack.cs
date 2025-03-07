@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using Cinemachine;
-using Unity.PlasticSCM.Editor.WebApi;
-using static UnityEditor.Progress;
-using UnityEditor.AI;
-using Unity.AI;
+
 using Unity.AI.Navigation;
+using UnityEngine.Serialization;
+
 /// <summary>
 /// This script 
 /// Select the closest item/ enemy to the player 
@@ -27,7 +24,7 @@ using Unity.AI.Navigation;
 public class PlayerAttack : MonoBehaviour
 {
 
-    public LayerMask Destructables;
+    [FormerlySerializedAs("Destructables")] public LayerMask destructables;
     public GameObject playerMesh;
     //public GameObject currentEnemy;
     //public GameObject currentGrabObject;
@@ -40,12 +37,11 @@ public class PlayerAttack : MonoBehaviour
     public float hitDistance = 2f;
     [SerializeField] LayerMask layermask;
     public int layer;
-    private GameObject lastHighlighted = null;
 
 
     public List<GameObject> collidedItems = new List<GameObject>();
     public List<GameObject> rayCastedItems = new List<GameObject>();
-    public GameObject[] DestructionPieces;
+    [FormerlySerializedAs("DestructionPieces")] public GameObject[] destructionPieces;
     public GameObject itemParent;
     public bool attackedEnemy;
     public bool grabbedObject;
@@ -53,17 +49,18 @@ public class PlayerAttack : MonoBehaviour
     //Lists for enemies/Things attacked
     //public List<EnemyTranslationTableEntry> enemies = new List<EnemyTranslationTableEntry>();
 
+    [FormerlySerializedAs("EnemyTranslationType")]
     [Header("Linked scripts")]
     //Attached Scripts
-    [SerializeField] BaseEnemyTranslation EnemyTranslationType;
-    BaseEnemyTranslation EnemyTranslation;
+    [SerializeField] BaseEnemyTranslation enemyTranslationType;
+    BaseEnemyTranslation _enemyTranslation;
     public EnemyTracker enemyTracker;
     public PlayerClass playerClass;
     public ThirdPersonMovement thirdPersonMovement;
     public Coroutine AttackEnemyCoroutine;
     public GameController gameController;
     public CurrentEnemyClass currentEnemyClass;
-
+    public EnemyHealthBar enemyHealthBar;
     public enum PlayerActionStates
     {
         Null, 
@@ -71,12 +68,12 @@ public class PlayerAttack : MonoBehaviour
         Defense
     }
 
-    public PlayerActionStates ActionState;
+    [FormerlySerializedAs("ActionState")] public PlayerActionStates actionState;
 
 
     private void Awake()
     {
-        EnemyTranslation = ScriptableObject.Instantiate(EnemyTranslationType);
+        _enemyTranslation = ScriptableObject.Instantiate(enemyTranslationType);
         
       
     }
@@ -94,9 +91,8 @@ public class PlayerAttack : MonoBehaviour
 
 
 
-        if (Destructables == (Destructables | (1 << collision.gameObject.layer)))
+        if (destructables == (destructables | (1 << collision.gameObject.layer)))
         {
-            lastHighlighted = collision.gameObject;
             //gameOver
 
 
@@ -134,12 +130,11 @@ public class PlayerAttack : MonoBehaviour
                     //rayCastedItems.Add(hit.transform.gameObject);
                     //if (!iList.Contains(value)) iList.Add(value)
                     rayCastedItems.RemoveAll(s => s == null);
-                    lastHighlighted = hit.transform.gameObject;
                     if (!rayCastedItems.Contains(hit.transform.gameObject))
                     {
                         rayCastedItems.Add(hit.transform.gameObject);
                         SelectClosestEnemy();
-                        ShowActionTooltipUI(currentEnemyClass.currentEnemy);
+                // ShowActionTooltipUI(currentEnemyClass.currentEnemy);
                         //ShowDestroyTooltipUI(hit.transform.gameObject);
                         //OldColor = lastHighlighted.GetComponent<Renderer>().material.color;
                         //hit.transform.GetComponent<Renderer>().material.color = Color.red;
@@ -184,12 +179,12 @@ public class PlayerAttack : MonoBehaviour
 
     public void ChangeActionState()
     {
-        switch (ActionState)
+        switch (actionState)
         {
             case PlayerActionStates.Null:
 
                 //%%TestingLIne only
-                ActionState = PlayerActionStates.Attack;
+                actionState = PlayerActionStates.Attack;
                 //If game started, then change to the attack state;
 
                 break;
@@ -213,8 +208,8 @@ public class PlayerAttack : MonoBehaviour
 
             case PlayerActionStates.Defense:
                 //Reduce the speed of the player and prevent it from recieving damage from the enemy
-                thirdPersonMovement.speed = 1f;
-                if (Input.GetMouseButtonDown(1))
+                thirdPersonMovement.speed = 3f;
+         if (Input.GetMouseButtonDown(1))
                 {
                     StartCoroutine(ReleaseCurrentEnemy());
 
@@ -255,19 +250,20 @@ public class PlayerAttack : MonoBehaviour
     public IEnumerator AttackCurrentEnemy()
     {
         //Play player attacking animation
-        yield return new WaitForSeconds(.2f);
+        //GRab enemy prefab and find the enemy UI bar , then set active and assign that item's value to the 
+            yield return new WaitForSeconds(.2f);
         if (attackedEnemy)
         {
             currentEnemyClass.attackedEnemy = currentEnemyClass.currentEnemy;
             //currentEnemyClass.currentEnemy.GetComponent<Renderer>().material.color = Color.white;
-            enemyTracker.TakeDamage(currentEnemyClass.currentEnemy.gameObject, playerClass.PlayerDamageValue, currentEnemyClass.currentEnemy.tag);
+            enemyTracker.TakeDamage(currentEnemyClass.currentEnemy.gameObject, playerClass.playerDamageValue, currentEnemyClass.currentEnemy.tag);
             if (!currentEnemyClass.attackedEnemy.CompareTag("Fiend") )
             {
                 if(currentEnemyClass.attackedEnemyHealth <= 0)
                 {
-                if(playerClass.PlayerHealth <= 100)
+                if(playerClass.playerHealth <= 100)
                     {
-                        playerClass.PlayerHealth += 10;
+                        playerClass.playerHealth += 10;
                     }
 
             Fragmentation(currentEnemyClass.attackedEnemy);
@@ -285,7 +281,7 @@ public class PlayerAttack : MonoBehaviour
         if (!grabbedObject)
         {
             playerClass.currentGrabbedObject = currentEnemyClass.currentEnemy.gameObject;
-            var PlayerOffset = new Vector3(playerGrabPoint.transform.position.x, playerGrabPoint.transform.position.y , playerMesh.transform.position.z + (playerClass.currentGrabbedObject.transform.localScale.z / 2) + (playerGrabPoint.transform.localScale.z / 2));
+            var playerOffset = new Vector3(playerGrabPoint.transform.position.x, playerGrabPoint.transform.position.y , playerMesh.transform.position.z + (playerClass.currentGrabbedObject.transform.localScale.z / 2) + (playerGrabPoint.transform.localScale.z / 2));
             Rigidbody grabbedRb = playerClass.currentGrabbedObject.GetComponent<Rigidbody>();
             if (!grabbedRb)
             {
@@ -293,21 +289,21 @@ public class PlayerAttack : MonoBehaviour
             }
             grabbedRb.useGravity = false;
             grabbedRb.constraints = RigidbodyConstraints.FreezeAll;
-            playerClass.currentGrabbedObject.transform.position = PlayerOffset;
+            playerClass.currentGrabbedObject.transform.position = playerOffset;
             BakeNavMesh();
 
             playerClass.currentGrabbedObject.transform.parent = playerMesh.transform;
             playerClass.currentGrabbedObject.transform.rotation = playerMesh.transform.rotation;
            
-          ActionState = PlayerActionStates.Defense;
+          actionState = PlayerActionStates.Defense;
             grabbedObject = true;
             
             //*** If tag == fiend Play the current Enemy struggling animation here
 
             if (playerClass.currentGrabbedObject.CompareTag("Fiend")) 
             {
-                UnityEngine.AI.NavMeshAgent Agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
-                Agent.enabled = false;
+                UnityEngine.AI.NavMeshAgent agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+                agent.enabled = false;
             
             }
         }
@@ -317,7 +313,7 @@ public class PlayerAttack : MonoBehaviour
     public IEnumerator ReleaseCurrentEnemy()
     {
             playerClass.currentGrabbedObject.transform.parent = null;
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.1f);
         if (grabbedObject)
         {
           
@@ -341,19 +337,20 @@ public class PlayerAttack : MonoBehaviour
 
             // Add force in the direction
             grabbedRb.AddForce(direction * 10f, ForceMode.Impulse);  // Adjust the force magnitude as needed
-       
+            enemyTracker.TakeDamage(playerClass.currentGrabbedObject.gameObject, playerClass.playerThrowDamageValue, currentEnemyClass.currentEnemy.tag);
+
             Debug.Log($"Force applied with magnitude: {direction.magnitude * 1f}");
             if (playerClass.currentGrabbedObject.CompareTag("Fiend"))
             {
-                UnityEngine.AI.NavMeshAgent Agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
-                Agent.enabled = true;
+                UnityEngine.AI.NavMeshAgent agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+                agent.enabled = true;
 
             }
 
             Debug.Log("huh");
             playerClass.currentGrabbedObject = null;
         grabbedObject = false;
-            ActionState = PlayerActionStates.Attack;
+            actionState = PlayerActionStates.Attack;
             BakeNavMesh();
 
         }
@@ -376,15 +373,15 @@ public class PlayerAttack : MonoBehaviour
     public void ShowActionTooltipUI(GameObject item)
     {
         //Parent it under the gaemObject item
-        if (selectedObject == true)
+        if (selectedObject )
         {
-        var AboveItem = new Vector3(item.transform.position.x, item.transform.position.y + (item.transform.position.y / 2) + 2.5f, item.transform.position.z);
-        var SelectedItemUI = Instantiate(objectToolTipUI, AboveItem, transform.rotation);
-            SelectedItemUI.transform.parent = item.transform;
+        var aboveItem = new Vector3(item.transform.position.x, item.transform.position.y + (item.transform.position.y / 2) + 2.5f, item.transform.position.z);
+        var selectedItemUI = Instantiate(objectToolTipUI, aboveItem, transform.rotation);
+            selectedItemUI.transform.parent = item.transform;
             selectedObject = false;
             if (currentEnemyClass.currentEnemy != null)
             {
-            Destroy(SelectedItemUI, 2f);
+            Destroy(selectedItemUI, 2f);
             }
 
         }
@@ -396,12 +393,12 @@ public class PlayerAttack : MonoBehaviour
 
     public void OnTriggerExit(Collider collision)
     {
-        if (Destructables == (Destructables | (1 << collision.gameObject.layer)))
+        if (destructables == (destructables | (1 << collision.gameObject.layer)))
         {
 
             //lastHighlighted.GetComponent<Renderer>().material.color = Color.blue;
         }
-        lastHighlighted = currentEnemyClass.currentEnemy;
+
         rayCastedItems.RemoveAll(s => s == null);
         collidedItems.Remove(collision.gameObject);
 
@@ -435,13 +432,13 @@ public class PlayerAttack : MonoBehaviour
         //for each child in the parent we want to assign a rigidbody to it
         //Add all the childObjects into a list
 
-        DestructionPieces = new GameObject[itemParent.transform.childCount];
-        for (int i = 0; i < DestructionPieces.Length; i++)
+        destructionPieces = new GameObject[itemParent.transform.childCount];
+        for (int i = 0; i < destructionPieces.Length; i++)
         {
-            DestructionPieces[i] = itemParent.transform.GetChild(i).gameObject;
+            destructionPieces[i] = itemParent.transform.GetChild(i).gameObject;
         }
 
-        foreach (GameObject piece in DestructionPieces)
+        foreach (GameObject piece in destructionPieces)
         {
             Rigidbody pieceRb = piece.GetComponent<Rigidbody>();
             if (!pieceRb)
