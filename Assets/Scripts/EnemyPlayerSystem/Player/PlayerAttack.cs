@@ -63,7 +63,7 @@ public class PlayerAttack : MonoBehaviour
     public EnemyHealthBar enemyHealthBar;
     public enum PlayerActionStates
     {
-        Null, 
+        Null,
         Attack, 
         Defense
     }
@@ -336,7 +336,7 @@ public class PlayerAttack : MonoBehaviour
             direction.Normalize();  // Make sure the direction is normalized
 
             // Add force in the direction
-            grabbedRb.AddForce(direction * 10f, ForceMode.Impulse);  // Adjust the force magnitude as needed
+            grabbedRb.AddForce(direction * 1f, ForceMode.Impulse);  // Adjust the force magnitude as needed
             enemyTracker.TakeDamage(playerClass.currentGrabbedObject.gameObject, playerClass.playerThrowDamageValue, currentEnemyClass.currentEnemy.tag);
 
             Debug.Log($"Force applied with magnitude: {direction.magnitude * 1f}");

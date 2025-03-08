@@ -54,6 +54,9 @@ public class UIManager : MonoBehaviour
         playerClass.playerHealth = playerClass.playerMaxHealth;
         playerHealthBar.SetMaxHealth(playerClass.playerMaxHealth);
     }//THis function updates the player's health bar
+   
+   
+   
     public void UpdatePlayerHealthBar()
     {
         playerHealthBar.SetHealth(playerClass.playerHealth); 

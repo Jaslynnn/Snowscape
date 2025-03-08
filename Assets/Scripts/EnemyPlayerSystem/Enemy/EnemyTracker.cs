@@ -103,7 +103,8 @@ public class EnemyTracker : MonoBehaviour
                 
             Debug.Log(enemyHealthBarObject.gameObject.name);
             enemyHealthBarObject.gameObject.SetActive(true);
-            enemyHealthBar.SetMaxHealth(currentEnemyClass.attackedEnemyHealth);
+            // enemyHealthBar.SetMaxHealth(currentEnemyClass.attackedEnemyHealth);
+            // enemyHealthBar.SetHealth(currentEnemyClass.attackedEnemyHealth);
             enemyHealthText.text = currentEnemyClass.attackedEnemyHealth.ToString();
             }
             //Set the current enemy health
