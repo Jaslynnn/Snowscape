@@ -41,6 +41,7 @@ public class EnemyNav : MonoBehaviour
 
     private void Update()
     {
+
         if (gameController.State == GameController.GameStateEnums.Tutorial || gameController.State == GameController.GameStateEnums.Started)
         {
             if(playerClass.playerHealth > 0)
@@ -69,12 +70,26 @@ public class EnemyNav : MonoBehaviour
         }
         // Ensure the GameObject's rotation on the X-axis stays at 0
         transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+
+        // update blend tree parameter 
+        float currentSpeed = agent.velocity.magnitude;
+        // Only update the animator if not attacking. (Assuming enemyAnimation has an isAttacking flag accessible)
+        if (!enemyAnimation.isAttacking)
+        {
+            enemyAnimation.UpdateMovementSpeed(currentSpeed);
+        }
+        //Debug.Log("Enemy nav speed set to: " + currentSpeed);
+
+
+
+
+
     }
 
     //Makes the Fiends move around the place randomly
     private void Patroling()
     {
-        enemyAnimation.PlayFiendWalk();
+        //enemyAnimation.PlayFiendWalk();
 
         agent.gameObject.GetComponent<Renderer>().material.color = Color.green;
         //Debug.Log("Patrolling");
@@ -106,8 +121,6 @@ public class EnemyNav : MonoBehaviour
     {
         if (agent == enabled)
         {
-            enemyAnimation.PlayFiendChase();
-
             agent.SetDestination(player.position);
             agent.gameObject.GetComponent<Renderer>().material.color = Color.blue;
         }
@@ -121,6 +134,7 @@ public class EnemyNav : MonoBehaviour
         
 
         agent.SetDestination(player.position);
+
         transform.LookAt(player);
 
         }
@@ -137,7 +151,6 @@ public class EnemyNav : MonoBehaviour
             
             cameraShakeTrigger.GenerateImpulseSource();
             enemyAnimation.PlayFiendAttack();
-            SoundManager.PlaySound(SoundType.BITE);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -156,8 +169,5 @@ public class EnemyNav : MonoBehaviour
         Debug.Log(playerClass.playerHealth);
 
     }
-
-
-
-
+    
 }

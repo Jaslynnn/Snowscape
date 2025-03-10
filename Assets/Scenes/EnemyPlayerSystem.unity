@@ -913,7 +913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 287135280}
-  speed: 2.5
+  speed: 4
   turnSmoothTime: 0.1
   gravity: -9.81
   yettyAnimation: {fileID: 1467118610}
@@ -3134,7 +3134,6 @@ MonoBehaviour:
   playerHealthBar: {fileID: 1994244846}
   enemyHealthBar: {fileID: 1122999223}
   levelCompletion: {fileID: 0}
-  backgroundMusicManager: {fileID: 0}
   State: 0
   Level: 0
 --- !u!1 &739226259
@@ -11498,6 +11497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 
+  isAttacking: 0
 --- !u!95 &1278144461
 Animator:
   serializedVersion: 5

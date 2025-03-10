@@ -195,7 +195,7 @@ public class PlayerAttack : MonoBehaviour
                 break;
 
             case PlayerActionStates.Attack:
-                thirdPersonMovement.speed = 6f;
+                thirdPersonMovement.speed = 4f;
                 if (Input.GetMouseButtonDown(0))
                 {
                     yettyAnimation.PlayYettyAttackStick();
@@ -215,7 +215,7 @@ public class PlayerAttack : MonoBehaviour
 
             case PlayerActionStates.Defense:
                 //Reduce the speed of the player and prevent it from recieving damage from the enemy
-                thirdPersonMovement.speed = 3f;
+                thirdPersonMovement.speed = 2f;
          if (Input.GetMouseButtonDown(1))
                 {
                     yettyAnimation.PlayYettyGrab();
