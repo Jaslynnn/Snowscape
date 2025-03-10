@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerHealthBar : MonoBehaviour
 {
     public Slider slider;
+    public float animationSpeed = 0.5f; // Duration of the animation
 
     public void SetMaxHealth(int health)
     {
@@ -15,7 +16,11 @@ public class PlayerHealthBar : MonoBehaviour
 
     public void SetHealth(int health)
     {
-        slider.value = health; 
+        // Animate the slider value change
+        LeanTween.value(gameObject, slider.value, health, animationSpeed).setOnUpdate((float val) =>
+        {
+            slider.value = val;
+        });
     }
-
 }
+

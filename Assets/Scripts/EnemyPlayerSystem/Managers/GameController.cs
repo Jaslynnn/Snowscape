@@ -26,8 +26,9 @@ public class GameController : MonoBehaviour
     public UIManager uiManager;
     public PlayerHealthBar playerHealthBar;
     public EnemyHealthBar enemyHealthBar;
+    public LevelCompletion levelCompletion;
 
-
+    private BackgroundMusicManager backgroundMusicManager;
     public enum GameStateEnums
     {
         NotStarted,
@@ -52,12 +53,27 @@ public class GameController : MonoBehaviour
     public GameStateEnums State;
     public LevelsStateEnums Level;
 
+    
     void Awake()
     {
         CountTotalFiends();
+        backgroundMusicManager = FindObjectOfType<BackgroundMusicManager>();
+        if (backgroundMusicManager == null)
+        {
+            Debug.Log("BackgroundMusicManager not found in the Game Scene!");
+        }
     }
 
-   
+    private void Start()
+    {
+       if (backgroundMusicManager != null)
+        {
+            backgroundMusicManager.ChangeMusic(1); // Switches to soundtrack index 1
+        }
+    }
+
+
+
     void Update()
     {
         ChangeGameState();
@@ -193,6 +209,7 @@ public class GameController : MonoBehaviour
                     Level = LevelsStateEnums.Level1;
 
                     //Use sceneLoader to go to the next level
+                    GameFlowManager.Instance.LoadLevelSelection();
                     playerClass.enemyDefeatedCounter = 0;
 
                 }

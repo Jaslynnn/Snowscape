@@ -111,7 +111,7 @@ public class EnemyTracker : MonoBehaviour
         }
         
         enemyHealthBarObject = enemy.transform.Find("EnemyHealthBar");
-        enemyHealthText = enemyHealthBarObject.Find("EnemyHealthNo").GetComponent<TMP_Text>();
+        //enemyHealthText = enemyHealthBarObject.Find("EnemyHealthNo").GetComponent<TMP_Text>();
             
             
         }

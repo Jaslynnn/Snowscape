@@ -26,12 +26,17 @@ public class EnemyNav : MonoBehaviour
     public PlayerAttack playerAttack;
     public GameController gameController;
     public UIManager uiManager;
-    
+    [SerializeField] EnemyAnimation enemyAnimation;
+    public CameraShakeTrigger cameraShakeTrigger;
+
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
-
+        /*if (enemyAnimation != null)
+        {
+            Debug.Log("enemyAnimation found");
+        }*/
     }
 
     private void Update()
@@ -62,11 +67,15 @@ public class EnemyNav : MonoBehaviour
             }
             //Check for sight and attack range
         }
+        // Ensure the GameObject's rotation on the X-axis stays at 0
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
 
     //Makes the Fiends move around the place randomly
     private void Patroling()
     {
+        enemyAnimation.PlayFiendWalk();
+
         agent.gameObject.GetComponent<Renderer>().material.color = Color.green;
         //Debug.Log("Patrolling");
         if (!walkPointSet) SearchWalkPoint();
@@ -97,6 +106,8 @@ public class EnemyNav : MonoBehaviour
     {
         if (agent == enabled)
         {
+            enemyAnimation.PlayFiendChase();
+
             agent.SetDestination(player.position);
             agent.gameObject.GetComponent<Renderer>().material.color = Color.blue;
         }
@@ -107,19 +118,26 @@ public class EnemyNav : MonoBehaviour
     {
         if(agent == enabled)
         {
+        
+
         agent.SetDestination(player.position);
         transform.LookAt(player);
 
         }
         if (!alreadyAttacked)
         {
-            
+
             //Deduct the health of the player
             //Knocks the player backwards, 3 consecutive strikes will set the player flying
             //if the player hits something at a certain velocity, they destroy the object/ object will fracture
 
             //Place the attack code in here
             //Debug.Log("Attacking rn");
+            //Camera Shake
+            
+            cameraShakeTrigger.GenerateImpulseSource();
+            enemyAnimation.PlayFiendAttack();
+            SoundManager.PlaySound(SoundType.BITE);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }

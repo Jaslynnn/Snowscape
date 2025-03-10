@@ -9,9 +9,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float gravity = -9.81f;
     private Vector3 _velocity;
+    
 
     private readonly float[] _allowedAngles = { 0f, 45f, 90f, 135f, 180f, -135f, -90f, -45f };
 
+    [SerializeField] YettyAnimation yettyAnimation;
+  
     public void PlayerMovement()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -23,12 +26,14 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
+            yettyAnimation.PlayYettyWalk();
             float rawAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float targetAngle = FindClosestAllowedAngle(rawAngle);
             float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-
+           
+         
         if (!controller.isGrounded)
         {
             _velocity.y = 0.01f;
@@ -38,6 +43,10 @@ public class ThirdPersonMovement : MonoBehaviour
         }
             move = moveDirection.normalized * speed; // Store movement vector
         }
+        else
+        {
+            yettyAnimation.PlayYettyIdle(); // Play idle animation when not moving
+        }
 
         // Apply gravity
         _velocity.y += gravity * Time.deltaTime;
@@ -45,9 +54,7 @@ public class ThirdPersonMovement : MonoBehaviour
         // Apply both movement and gravity in a single call
         controller.Move((move + _velocity) * Time.deltaTime);
     }
-
-
-
+    
     private float FindClosestAllowedAngle(float rawAngle)
     {
         float closestAngle = _allowedAngles[0];

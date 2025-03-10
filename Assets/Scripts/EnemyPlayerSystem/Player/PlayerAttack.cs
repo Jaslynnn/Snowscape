@@ -61,6 +61,9 @@ public class PlayerAttack : MonoBehaviour
     public GameController gameController;
     public CurrentEnemyClass currentEnemyClass;
     public EnemyHealthBar enemyHealthBar;
+
+    [SerializeField] YettyAnimation yettyAnimation;
+    
     public enum PlayerActionStates
     {
         Null,
@@ -75,7 +78,9 @@ public class PlayerAttack : MonoBehaviour
     {
         _enemyTranslation = ScriptableObject.Instantiate(enemyTranslationType);
         
-      
+        
+   
+
     }
 
     public void OnTriggerEnter(Collider collision)
@@ -193,6 +198,7 @@ public class PlayerAttack : MonoBehaviour
                 thirdPersonMovement.speed = 6f;
                 if (Input.GetMouseButtonDown(0))
                 {
+                    yettyAnimation.PlayYettyAttackStick();
                     //Change the state here
                     //Debug.Log("Attacking" + currentEnemy);
                     attackedEnemy = true;
@@ -200,6 +206,7 @@ public class PlayerAttack : MonoBehaviour
                 }
                 if (Input.GetMouseButtonDown(1))
                 {
+                    yettyAnimation.PlayYettyGrab();
                     StartCoroutine(GrabCurrentEnemy()); 
                     
 
@@ -211,6 +218,7 @@ public class PlayerAttack : MonoBehaviour
                 thirdPersonMovement.speed = 3f;
          if (Input.GetMouseButtonDown(1))
                 {
+                    yettyAnimation.PlayYettyGrab();
                     StartCoroutine(ReleaseCurrentEnemy());
 
                 }
