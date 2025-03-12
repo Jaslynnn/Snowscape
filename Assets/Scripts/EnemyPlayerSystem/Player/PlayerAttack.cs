@@ -188,17 +188,19 @@ public class PlayerAttack : MonoBehaviour
         {
             case PlayerActionStates.Null:
 
+
                 //%%TestingLIne only
-                actionState = PlayerActionStates.Attack;
+
+                // actionState = PlayerActionStates.Attack;
+
                 //If game started, then change to the attack state;
-
-                break;
-
-            case PlayerActionStates.Attack:
                 thirdPersonMovement.speed = 4f;
+
+
+
                 if (Input.GetMouseButtonDown(0))
                 {
-                    yettyAnimation.PlayYettyAttackStick();
+                   
                     //Change the state here
                     //Debug.Log("Attacking" + currentEnemy);
                     attackedEnemy = true;
@@ -211,7 +213,12 @@ public class PlayerAttack : MonoBehaviour
                     
 
                 }
-                    break;
+
+
+                break;
+
+            case PlayerActionStates.Attack:
+                break;
 
             case PlayerActionStates.Defense:
                 //Reduce the speed of the player and prevent it from recieving damage from the enemy
@@ -257,29 +264,45 @@ public class PlayerAttack : MonoBehaviour
 
     public IEnumerator AttackCurrentEnemy()
     {
-        //Play player attacking animation
         //GRab enemy prefab and find the enemy UI bar , then set active and assign that item's value to the 
-            yield return new WaitForSeconds(.2f);
-        if (attackedEnemy)
-        {
-            currentEnemyClass.attackedEnemy = currentEnemyClass.currentEnemy;
-            //currentEnemyClass.currentEnemy.GetComponent<Renderer>().material.color = Color.white;
-            enemyTracker.TakeDamage(currentEnemyClass.currentEnemy.gameObject, playerClass.playerDamageValue, currentEnemyClass.currentEnemy.tag);
-            if (!currentEnemyClass.attackedEnemy.CompareTag("Fiend") )
+            yield return new WaitForSeconds(.1f);
+            yettyAnimation.PlayYettyAttackStick();
+
+            actionState = PlayerActionStates.Attack;
+            if (attackedEnemy)
             {
-                if(currentEnemyClass.attackedEnemyHealth <= 0)
+                currentEnemyClass.attackedEnemy = currentEnemyClass.currentEnemy;
+                if (!currentEnemyClass.attackedEnemy)
                 {
-                if(playerClass.playerHealth <= 100)
-                    {
-                        playerClass.playerHealth += 10;
-                    }
-
-            Fragmentation(currentEnemyClass.attackedEnemy);
-
+                    Debug.Log("Nothing to Attack");
                 }
+                else
+                {
+
+                    //currentEnemyClass.currentEnemy.GetComponent<Renderer>().material.color = Color.white;
+                    enemyTracker.TakeDamage(currentEnemyClass.currentEnemy.gameObject, playerClass.playerDamageValue,
+                        currentEnemyClass.currentEnemy.tag);
+                    if (!currentEnemyClass.attackedEnemy.CompareTag("Fiend"))
+                    {
+                        if (currentEnemyClass.attackedEnemyHealth <= 0)
+                        {
+                            if (playerClass.playerHealth <= 100)
+                            {
+                                playerClass.playerHealth += 10;
+                            }
+
+                            Fragmentation(currentEnemyClass.attackedEnemy);
+
+                        }
+                    }
+ 
+                    attackedEnemy = false;
+                }
+
             }
-            attackedEnemy = false;
-        }
+
+            yield return new WaitForSeconds(1f);
+            actionState = PlayerActionStates.Null;
     }
 
     public IEnumerator GrabCurrentEnemy()

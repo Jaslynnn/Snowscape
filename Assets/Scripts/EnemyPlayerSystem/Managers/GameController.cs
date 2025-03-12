@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     [Header("Linked scripts")]
     //Scripts to be linked
     public PlayerClass playerClass;
+
+    public PlayerAttack playerAttack;
     public CurrentEnemyClass currentEnemyClass;
     public ThirdPersonMovement thirdPersonMovement;
     public UIManager uiManager;
@@ -60,11 +62,12 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         CountTotalFiends();
-        backgroundMusicManager = FindObjectOfType<BackgroundMusicManager>();
-        if (backgroundMusicManager == null)
-        {
-            Debug.Log("BackgroundMusicManager not found in the Game Scene!");
-        }
+        // backgroundMusicManager = FindObjectOfType<BackgroundMusicManager>();
+        // if (backgroundMusicManager == null)
+        // {
+            // Debug.Log("BackgroundMusicManager not found in the Game Scene!");
+        // }
+        playerMesh.transform.position = spawnPoint.transform.position;
     }
 
     private void Start()
@@ -98,7 +101,11 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameStateEnums.Tutorial:
-                thirdPersonMovement.PlayerMovement();
+                if (playerAttack.actionState != PlayerAttack.PlayerActionStates.Attack)
+                {
+                    thirdPersonMovement.PlayerMovement(); 
+                }
+                
                 if (playerClass.playerHealth <= 0)
                 {
                     Debug.Log("Health = 0");
@@ -112,7 +119,10 @@ public class GameController : MonoBehaviour
             case GameStateEnums.Started:
                 //Reposition the player to the spawn point
                 //FindObjectOfType<AudioManager>().AdjustVolume("Theme", 0.1f);
-                thirdPersonMovement.PlayerMovement();
+                if (playerAttack.actionState != PlayerAttack.PlayerActionStates.Attack)
+                {
+                    thirdPersonMovement.PlayerMovement(); 
+                }
 
             
                 if (playerClass.playerHealth <= 0)
@@ -130,7 +140,7 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameStateEnums.Ended:
-                GameFlowManager.Instance.StartGame();
+                // GameFlowManager.Instance.StartGame();
                 break;
 
         }
