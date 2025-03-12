@@ -28,14 +28,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: MAT_Yetty_Light
-    second: {fileID: 8435705314880457765, guid: dc469c64dff8d8a49a24f7970ddd8e47,
-      type: 3}
+    second: {fileID: 2100000, guid: 52cf5c5580811ac409f90ffcb7142a9d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: MAT_Yetty_Mask
-    second: {fileID: 6435582148858251350, guid: e128378de2927b044a46c3b51567f780,
-      type: 3}
+    second: {fileID: 2100000, guid: e92a399a1275f3846bf91960c89f557a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

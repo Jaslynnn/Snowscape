@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
     public GameObject[] AllAssetsArray;
     public GameObject playerMesh;
     public GameObject spawnPoint;
-
+    public GameObject tutorial;
 
     [Header("Linked scripts")]
     //Scripts to be linked
@@ -27,6 +27,9 @@ public class GameController : MonoBehaviour
     public PlayerHealthBar playerHealthBar;
     public EnemyHealthBar enemyHealthBar;
     public LevelCompletion levelCompletion;
+
+   
+
 
     private BackgroundMusicManager backgroundMusicManager;
     public enum GameStateEnums
@@ -70,6 +73,7 @@ public class GameController : MonoBehaviour
         {
             backgroundMusicManager.ChangeMusic(1); // Switches to soundtrack index 1
         }
+
     }
 
 
@@ -90,7 +94,7 @@ public class GameController : MonoBehaviour
             case GameStateEnums.NotStarted:
                 //playerMesh.transform.position = spawnPoint.transform.position;
                 //if the start button is pressed, start the game
-               
+                StartCoroutine(TutorialCountdown());
                 break;
 
             case GameStateEnums.Tutorial:
@@ -126,7 +130,7 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameStateEnums.Ended:
-
+                GameFlowManager.Instance.StartGame();
                 break;
 
         }
@@ -163,10 +167,18 @@ public class GameController : MonoBehaviour
     public void EndGame()
     {
         //Attached to a button
+        
         State = GameStateEnums.Ended;
+        
+
     }
 
-
+    public IEnumerator TutorialCountdown()
+    {
+        yield return new WaitForSeconds(4f);
+        tutorial.SetActive(false);
+        State = GameStateEnums.Tutorial;
+    }
     //RUns through the asset loop to reshow everything again
     public void ReshowAllAssets()
     {

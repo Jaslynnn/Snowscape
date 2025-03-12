@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; // For hover functionality
-
 public class MainMenuUIAnim : MonoBehaviour
 {
     public GameObject title; // Reference to the title (for floating)
@@ -77,6 +76,7 @@ public class MainMenuUIAnim : MonoBehaviour
 
         // Increase opacity on hover
         buttonCanvasGroups[button].alpha = 1f; // Fully visible when hovered
+        //SoundManager.PlaySound(SoundType.HOVER);
     }
 
     // Revert scale back to original and opacity when pointer exits the button
