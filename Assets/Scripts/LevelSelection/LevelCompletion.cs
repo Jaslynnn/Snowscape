@@ -15,11 +15,5 @@ public class LevelCompletion : MonoBehaviour
             GameFlowManager.Instance.CompleteLevel(levelIndex);
         }
     }
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            FinishLevel(1);
-        }
-    }
+
 }

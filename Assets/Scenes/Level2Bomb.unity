@@ -935,7 +935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 201595755}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -944,7 +944,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -965,7 +965,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2315,7 +2315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 293745221}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -2324,7 +2324,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -2345,7 +2345,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -4505,7 +4505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 496137132}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -4514,7 +4514,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -4535,7 +4535,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -4897,7 +4897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 527535848}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -4906,7 +4906,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -4927,7 +4927,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -6121,7 +6121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 588593328}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -6130,7 +6130,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -6151,7 +6151,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -7022,7 +7022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 685318156}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -7031,7 +7031,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -7052,7 +7052,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -7305,7 +7305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 689797155}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -7314,7 +7314,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -7335,7 +7335,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -7426,6 +7426,7 @@ MonoBehaviour:
   playerHealthBar: {fileID: 1994244846}
   enemyHealthBar: {fileID: 1122999223}
   levelCompletion: {fileID: 0}
+  yettyAnimation: {fileID: 1467118610}
   State: 0
   Level: 0
 --- !u!1001 &734137335
@@ -8707,6 +8708,139 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 775894965}
   m_CullTransparentMesh: 1
+--- !u!1 &785777803
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785777804}
+  - component: {fileID: 785777808}
+  - component: {fileID: 785777807}
+  - component: {fileID: 785777806}
+  - component: {fileID: 785777809}
+  m_Layer: 9
+  m_Name: playerActionBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &785777804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785777803}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.37, y: -0.584, z: 1.15}
+  m_LocalScale: {x: 1.3407574, y: 0.1517316, z: 0.35132533}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3297915315023562381}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &785777806
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785777803}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &785777807
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785777803}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &785777808
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785777803}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &785777809
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785777803}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &791874401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9095,7 +9229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 796629055}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -9104,7 +9238,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -9125,7 +9259,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -9808,7 +9942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 834493546}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -9817,7 +9951,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -9838,7 +9972,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -11474,7 +11608,7 @@ Transform:
   m_GameObject: {fileID: 952542944}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.02, y: -0.15, z: 0.477}
+  m_LocalPosition: {x: -0.02, y: -0.15, z: 1.15}
   m_LocalScale: {x: 0.46967, y: 0.24774623, z: 0.08387367}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12729,7 +12863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1002518493}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -12738,7 +12872,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -12759,7 +12893,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -14063,7 +14197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1073077021}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -14072,7 +14206,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -14093,7 +14227,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -14473,7 +14607,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -20407,7 +20541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1249384205}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -20416,7 +20550,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -20437,7 +20571,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -24464,7 +24598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1601294375}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -24473,7 +24607,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -24494,7 +24628,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -24796,7 +24930,7 @@ MonoBehaviour:
   destructables:
     serializedVersion: 2
     m_Bits: 192
-  playerMesh: {fileID: 1467118607}
+  playerMesh: {fileID: 287135278}
   objectToolTipUI: {fileID: 1246456833569194229, guid: 9ad6a4fc0e701ff42a2aba9d2d10f00f,
     type: 3}
   playerGrabPoint: {fileID: 952542944}
@@ -24823,6 +24957,7 @@ MonoBehaviour:
   enemyHealthBar: {fileID: 1122999223}
   yettyAnimation: {fileID: 1467118610}
   actionState: 0
+  weaponState: 0
 --- !u!65 &1617099603
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25458,7 +25593,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -25938,7 +26073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1803887632}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -25947,7 +26082,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -25968,7 +26103,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -26249,7 +26384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1824868438}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -26258,7 +26393,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -26279,7 +26414,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -28501,6 +28636,11 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 0.007924227
       objectReference: {fileID: 0}
+    - target: {fileID: 5943300347096228021, guid: 6a9245e70fb792d4da016aa90186bafb,
+        type: 3}
+      propertyPath: m_TagString
+      value: Fiend
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29689,7 +29829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1901169071}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -29698,7 +29838,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -29719,7 +29859,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -30210,7 +30350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1936935705}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -30219,7 +30359,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -30240,7 +30380,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -31524,7 +31664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 2137629589}
-  player: {fileID: 287135281}
+  player: {fileID: 785777804}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
@@ -31533,7 +31673,7 @@ MonoBehaviour:
     m_Bits: 512
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 7
   sightRange: 3
   attackRange: 2
   playerInSightRange: 0
@@ -31554,7 +31694,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 1
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -33708,6 +33848,7 @@ Transform:
   - {fileID: 952542945}
   - {fileID: 6208351927966706172}
   - {fileID: 6564583066184742466}
+  - {fileID: 785777804}
   m_Father: {fileID: 287135281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4502039743185684892

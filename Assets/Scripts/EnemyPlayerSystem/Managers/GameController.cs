@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour
     public PlayerHealthBar playerHealthBar;
     public EnemyHealthBar enemyHealthBar;
     public LevelCompletion levelCompletion;
-
+    [SerializeField] YettyAnimation yettyAnimation;
    
 
 
@@ -86,6 +86,50 @@ public class GameController : MonoBehaviour
         ChangeGameState();
         uiManager.UpdateTestUI();
         CheckAllFiendsDead();
+        //Put the checker for the buttons here
+        if (playerAttack.actionState == PlayerAttack.PlayerActionStates.Null)
+        {
+            thirdPersonMovement.speed = 4f;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                playerAttack.attackedEnemy = true;
+                playerAttack.AttackEnemyCoroutine = StartCoroutine(playerAttack.AttackCurrentEnemy());
+
+            }
+            if (Input.GetKeyDown("1"))
+            {
+
+                playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Hit;
+
+            }
+            if (Input.GetKeyDown("2"))
+            {
+
+                playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Grab;
+
+            }
+            if (Input.GetKeyDown("3"))
+            {
+
+                playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Bomb;
+
+            }
+
+        }
+
+        if (playerAttack.actionState == PlayerAttack.PlayerActionStates.Defense)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                thirdPersonMovement.speed = 2f;
+                if (playerAttack.weaponState == PlayerAttack.PlayerWeaponState.Grab)
+                {
+                    yettyAnimation.PlayYettyGrab();
+                    StartCoroutine(playerAttack.ReleaseCurrentEnemy());
+                }
+            }
+        }
+       
 
 
     }
@@ -117,21 +161,7 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameStateEnums.Started:
-                //Reposition the player to the spawn point
-                //FindObjectOfType<AudioManager>().AdjustVolume("Theme", 0.1f);
-                if (playerAttack.actionState != PlayerAttack.PlayerActionStates.Attack)
-                {
-                    thirdPersonMovement.PlayerMovement(); 
-                }
 
-            
-                if (playerClass.playerHealth <= 0)
-                {
-                    Debug.Log("GameEnded");
-                    State = GameStateEnums.Ended;
-                    playerClass.playerHealth = 0;
-                    //uiManager.ChangeToGameEndedAnimationState();
-                }
                 break;
    
 

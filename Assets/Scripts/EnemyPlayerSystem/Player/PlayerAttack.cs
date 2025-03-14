@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 using Unity.AI.Navigation;
 using UnityEngine.Serialization;
 
@@ -71,23 +71,28 @@ public class PlayerAttack : MonoBehaviour
         Defense
     }
 
+    public enum PlayerWeaponState
+    {
+        Hit,
+        Grab,
+        Bomb
+    }
+
     [FormerlySerializedAs("ActionState")] public PlayerActionStates actionState;
+
+    public PlayerWeaponState weaponState;
 
 
     private void Awake()
     {
         _enemyTranslation = ScriptableObject.Instantiate(enemyTranslationType);
         
-        
-   
-
-    }
+   }
 
     public void OnTriggerEnter(Collider collision)
     {
         if (gameController.State == GameController.GameStateEnums.Tutorial || gameController.State == GameController.GameStateEnums.Started)
         {
-
 
             //CollisionItemParent = collision.transform.parent.gameObject;
 
@@ -180,40 +185,14 @@ public class PlayerAttack : MonoBehaviour
 
     }
 
-
-
     public void ChangeActionState()
     {
         switch (actionState)
         {
             case PlayerActionStates.Null:
 
-
-                //%%TestingLIne only
-
-                // actionState = PlayerActionStates.Attack;
-
-                //If game started, then change to the attack state;
-                thirdPersonMovement.speed = 4f;
-
-
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                   
-                    //Change the state here
-                    //Debug.Log("Attacking" + currentEnemy);
-                    attackedEnemy = true;
-                    AttackEnemyCoroutine = StartCoroutine(AttackCurrentEnemy());
-                }
-                if (Input.GetMouseButtonDown(1))
-                {
-                    yettyAnimation.PlayYettyGrab();
-                    StartCoroutine(GrabCurrentEnemy()); 
-                    
-
-                }
-
+//Weapon and attack is checked in the gameController script update instead of here
+              
 
                 break;
 
@@ -221,24 +200,13 @@ public class PlayerAttack : MonoBehaviour
                 break;
 
             case PlayerActionStates.Defense:
-                //Reduce the speed of the player and prevent it from recieving damage from the enemy
-                thirdPersonMovement.speed = 2f;
-         if (Input.GetMouseButtonDown(1))
-                {
-                    yettyAnimation.PlayYettyGrab();
-                    StartCoroutine(ReleaseCurrentEnemy());
-
-                }
-
+             
                 
                 break;
         }
     }
 
-
-
-    
-
+   
     //Attack the first item in the raycasted list
     //if the item already existed in the attacked enemies, check the type of the item, if fiend then etc ....
     //then grab the health and do damage to the health using the already created function in the base enemies translation table
@@ -269,82 +237,109 @@ public class PlayerAttack : MonoBehaviour
             yettyAnimation.PlayYettyAttackStick();
 
             actionState = PlayerActionStates.Attack;
-            if (attackedEnemy)
+            if (weaponState == PlayerWeaponState.Hit)
             {
-                currentEnemyClass.attackedEnemy = currentEnemyClass.currentEnemy;
-                if (!currentEnemyClass.attackedEnemy)
-                {
-                    Debug.Log("Nothing to Attack");
-                }
-                else
-                {
+                HitCurrentEnemy();
+            }
 
-                    //currentEnemyClass.currentEnemy.GetComponent<Renderer>().material.color = Color.white;
-                    enemyTracker.TakeDamage(currentEnemyClass.currentEnemy.gameObject, playerClass.playerDamageValue,
-                        currentEnemyClass.currentEnemy.tag);
-                    if (!currentEnemyClass.attackedEnemy.CompareTag("Fiend"))
-                    {
-                        if (currentEnemyClass.attackedEnemyHealth <= 0)
-                        {
-                            if (playerClass.playerHealth <= 100)
-                            {
-                                playerClass.playerHealth += 10;
-                            }
+            if (weaponState == PlayerWeaponState.Grab)
+            {
+                GrabCurrentEnemy();
+            }
 
-                            Fragmentation(currentEnemyClass.attackedEnemy);
 
-                        }
-                    }
- 
-                    attackedEnemy = false;
-                }
-
+            if (weaponState == PlayerWeaponState.Bomb)
+            {
+                //Put function for dropping bomb here
             }
 
             yield return new WaitForSeconds(1f);
             actionState = PlayerActionStates.Null;
     }
 
-    public IEnumerator GrabCurrentEnemy()
+    public void HitCurrentEnemy()
     {
-        yield return new WaitForSeconds(.2f);
-        
-        if (!grabbedObject)
+        if (attackedEnemy)
         {
-            playerClass.currentGrabbedObject = currentEnemyClass.currentEnemy.gameObject;
-            var playerOffset = new Vector3(playerGrabPoint.transform.position.x, playerGrabPoint.transform.position.y , playerMesh.transform.position.z + (playerClass.currentGrabbedObject.transform.localScale.z / 2) + (playerGrabPoint.transform.localScale.z / 2));
-            Rigidbody grabbedRb = playerClass.currentGrabbedObject.GetComponent<Rigidbody>();
-            if (!grabbedRb)
+            
+            currentEnemyClass.attackedEnemy = currentEnemyClass.currentEnemy;
+            
+            if (!currentEnemyClass.attackedEnemy)
             {
-                grabbedRb = playerClass.currentGrabbedObject.AddComponent<Rigidbody>();
+                Debug.Log("Nothing to Attack");
             }
+            else
+            {
+                Vector3 targetPosition = currentEnemyClass.attackedEnemy.transform.position;
+                targetPosition.y = playerMesh.transform.position.y; // Keep the Y-axis unchanged
+                playerMesh.transform.LookAt(targetPosition);
+
+                //currentEnemyClass.currentEnemy.GetComponent<Renderer>().material.color = Color.white;
+                enemyTracker.TakeDamage(currentEnemyClass.currentEnemy.gameObject, playerClass.playerDamageValue,
+                    currentEnemyClass.currentEnemy.tag);
+                if (!currentEnemyClass.attackedEnemy.CompareTag("Fiend"))
+                {
+                    if (currentEnemyClass.attackedEnemyHealth <= 0)
+                    {
+                        if (playerClass.playerHealth <= 100)
+                        {
+                            playerClass.playerHealth += 10;
+                        }
+
+                        Fragmentation(currentEnemyClass.attackedEnemy);
+
+                    }
+                }
+ 
+                attackedEnemy = false;
+            }
+
+        }  
+    }
+
+    public void GrabCurrentEnemy()
+    {
+        actionState = PlayerActionStates.Defense;
+        yettyAnimation.PlayYettyGrab();
+        if (!grabbedObject && currentEnemyClass.currentEnemy)
+        {
+            actionState = PlayerActionStates.Attack;
+            playerClass.currentGrabbedObject = currentEnemyClass.currentEnemy.gameObject;
+            Rigidbody grabbedRb = playerClass.currentGrabbedObject.GetComponent<Rigidbody>() ?? playerClass.currentGrabbedObject.AddComponent<Rigidbody>();
             grabbedRb.useGravity = false;
             grabbedRb.constraints = RigidbodyConstraints.FreezeAll;
-            playerClass.currentGrabbedObject.transform.position = playerOffset;
+            StartCoroutine(MoveToGrabPoint(playerClass.currentGrabbedObject));
             BakeNavMesh();
-
             playerClass.currentGrabbedObject.transform.parent = playerMesh.transform;
             playerClass.currentGrabbedObject.transform.rotation = playerMesh.transform.rotation;
-           
-          actionState = PlayerActionStates.Defense;
+            actionState = PlayerActionStates.Defense;
             grabbedObject = true;
-            
-            //*** If tag == fiend Play the current Enemy struggling animation here
-
-            if (playerClass.currentGrabbedObject.CompareTag("Fiend")) 
+            if (playerClass.currentGrabbedObject.CompareTag("Fiend"))
             {
                 UnityEngine.AI.NavMeshAgent agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
                 agent.enabled = false;
-            
             }
         }
+        else { Debug.Log("Nothing to Grab"); }
+    }
 
+    private IEnumerator MoveToGrabPoint(GameObject grabbedObject)
+    {
+        float duration = 1.5f;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            grabbedObject.transform.position = Vector3.Lerp(grabbedObject.transform.position, playerGrabPoint.transform.position, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        grabbedObject.transform.position = playerGrabPoint.transform.position;
     }
 
     public IEnumerator ReleaseCurrentEnemy()
     {
             playerClass.currentGrabbedObject.transform.parent = null;
-        yield return new WaitForSeconds(.1f);
+      
         if (grabbedObject)
         {
           
@@ -359,22 +354,24 @@ public class PlayerAttack : MonoBehaviour
                 */
                 grabbedRb = playerClass.currentGrabbedObject.AddComponent<Rigidbody>();
             }
-            grabbedRb.isKinematic = false;
+
             grabbedRb.useGravity = true;
             grabbedRb.constraints = RigidbodyConstraints.None;
+            grabbedRb.isKinematic = false;
             // Calculate the direction and force to apply
-            Vector3 direction = grabbedRb.transform.position - transform.position;
+            Vector3 direction = playerMesh.transform.forward; 
             direction.Normalize();  // Make sure the direction is normalized
 
             // Add force in the direction
-            grabbedRb.AddForce(direction * 1f, ForceMode.Impulse);  // Adjust the force magnitude as needed
-            enemyTracker.TakeDamage(playerClass.currentGrabbedObject.gameObject, playerClass.playerThrowDamageValue, currentEnemyClass.currentEnemy.tag);
+            grabbedRb.AddForce(direction * 7f, ForceMode.Impulse);  // Adjust the force magnitude needed
+            // enemyTracker.TakeDamage(playerClass.currentGrabbedObject.gameObject, playerClass.playerThrowDamageValue, currentEnemyClass.currentEnemy.tag);
 
             Debug.Log($"Force applied with magnitude: {direction.magnitude * 1f}");
             if (playerClass.currentGrabbedObject.CompareTag("Fiend"))
             {
                 UnityEngine.AI.NavMeshAgent agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
                 agent.enabled = true;
+               
 
             }
 
@@ -383,12 +380,13 @@ public class PlayerAttack : MonoBehaviour
         grabbedObject = false;
             actionState = PlayerActionStates.Attack;
             BakeNavMesh();
-
+            yield return new WaitForSeconds(1f);
+            grabbedRb.isKinematic = true; 
+            actionState = PlayerActionStates.Null; 
         }
     }
 
     public void BakeNavMesh()
-
     {
 
         if (navMeshSurface != null)
