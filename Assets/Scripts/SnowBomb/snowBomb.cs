@@ -19,7 +19,7 @@ public class snowBomb : MonoBehaviour
     
     public void OnTriggerStay(Collider collision)
     {
-        if (collision.gameObject.CompareTag("Fiend"))
+        if (collision.gameObject.tag == "Fiend")
         {
             ExplodeCoroutine = StartCoroutine(Explode(collision.gameObject));
  
