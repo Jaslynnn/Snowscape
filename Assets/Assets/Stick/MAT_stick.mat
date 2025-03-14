@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MAT_Yetty_Blue
+  m_Name: MAT_stick
   m_Shader: {fileID: -6465566751694194690, guid: 3099d537f289f304fb43dbd2537da1c3,
     type: 3}
   m_Parent: {fileID: 0}
@@ -97,12 +97,8 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DecalMeshBiasType: 0
-    - _DecalMeshDepthBias: 0
-    - _DecalMeshViewBias: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DrawOrder: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -128,12 +124,12 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
-    - _BaseColor: {r: 0.35036665, g: 0.37140203, b: 0.4259674, a: 1}
-    - _Color: {r: 0.29316482, g: 0.30865073, b: 0.33962262, a: 1}
+    - _BaseColor: {r: 0.50532174, g: 0.45287943, b: 0.3399623, a: 1}
+    - _Color: {r: 0.50532174, g: 0.45287943, b: 0.33996227, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &1245614926610706356
+--- !u!114 &6976321436216213496
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

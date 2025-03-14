@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: d59c12117ce65427c894af40d3cb0cc7
+guid: e6642351917ba4305aa9189be9729a4d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_bomb_casing
+    second: {fileID: 2100000, guid: 187e8192838e4c74283ac90f8e626377, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_bomb_fuse
+    second: {fileID: 2100000, guid: 9e8c69777634b494aa722f8e21c7054b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

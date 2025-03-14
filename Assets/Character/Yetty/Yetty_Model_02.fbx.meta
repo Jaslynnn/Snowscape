@@ -1,9 +1,49 @@
 fileFormatVersion: 2
-guid: e6642351917ba4305aa9189be9729a4d
+guid: 96723ee66ecb6aa41a1e1cd237a9757b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Yetty_Blue
+    second: {fileID: 2100000, guid: 3e568c6421ac0054187de32e26b27dc0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Yetty_Gloves
+    second: {fileID: 2100000, guid: 86f629eb4fa2e434090cc8073cab05a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Yetty_GlovesFur
+    second: {fileID: 2100000, guid: 1b089c8d9a02d3546aaa787f0d6700fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Yetty_GlovesInner
+    second: {fileID: 2100000, guid: a68ea8895b1fbc145a0e5639ba8e0827, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Yetty_Light1
+    second: {fileID: 2100000, guid: a5f70d016a6e1634da4b14e53f7d6db3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Yetty_Mask
+    second: {fileID: 2100000, guid: e92a399a1275f3846bf91960c89f557a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Yetty_MaskInner
+    second: {fileID: 2100000, guid: 71213371f55166147a638ebb616e716c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MTA_Yetty_Pants
+    second: {fileID: 2100000, guid: b30782aacc1793c48b04c71ae24b19c9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
