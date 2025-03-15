@@ -11,8 +11,7 @@ using UnityEngine;
 public class snowBomb : MonoBehaviour
 {
     public GameObject explosionEffect;
-
-   
+    
     public int bombDamageValue;
     public Coroutine ExplodeCoroutine;
     //Linked scripts

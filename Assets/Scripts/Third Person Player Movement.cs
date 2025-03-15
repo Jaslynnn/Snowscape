@@ -3,6 +3,9 @@ using UnityEngine;
 public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
+    [SerializeField] YettyAnimation yettyAnimation;
+    public TutorialUIAnim tutorialUIAnim;
+    
     public float speed = 6f;
     public float turnSmoothTime = 0.1f;
     private float _turnSmoothVelocity;
@@ -12,9 +15,7 @@ public class ThirdPersonMovement : MonoBehaviour
     
 
     private readonly float[] _allowedAngles = { 0f, 45f, 90f, 135f, 180f, -135f, -90f, -45f };
-
-    [SerializeField] YettyAnimation yettyAnimation;
-  
+   
     public void PlayerMovement()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -24,6 +25,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
         Vector3 move = Vector3.zero; // Store final movement vector
 
+        // UI Glow Handling
+        CheckKeyGlow(KeyCode.LeftArrow, horizontal < 0);
+        CheckKeyGlow(KeyCode.RightArrow, horizontal > 0);
+        CheckKeyGlow(KeyCode.UpArrow, vertical > 0);
+        CheckKeyGlow(KeyCode.DownArrow, vertical < 0);
+        
         if (direction.magnitude >= 0.1f)
         {
            
@@ -58,7 +65,14 @@ public class ThirdPersonMovement : MonoBehaviour
         float currentSpeed = horizontalVelocity.magnitude;
         yettyAnimation.UpdateMovementSpeed(currentSpeed);
     }
-    
+    private void CheckKeyGlow(KeyCode key, bool isPressed)
+    {
+        if (isPressed)
+            tutorialUIAnim.ShowGlow(key);
+        else
+            tutorialUIAnim.HideGlow(key);
+    }
+
     private float FindClosestAllowedAngle(float rawAngle)
     {
         float closestAngle = _allowedAngles[0];
