@@ -31,8 +31,8 @@ public class GameController : MonoBehaviour
     public LevelCompletion levelCompletion;
     public YettyAnimation yettyAnimation;
     public AudioManager audioManager;
-   
-
+    public TutorialUIAnim tutorialUIAnim;
+    public UIElementScaler uiElementScaler;
 
   
     public enum GameStateEnums
@@ -59,53 +59,58 @@ public class GameController : MonoBehaviour
     public GameStateEnums State;
     public LevelsStateEnums Level;
 
-    
+    void Start()
+    {
+        // Simulate pressing "1" in Start
+        playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Hit;
+        StartCoroutine(InitializeUI());
+
+    }
     void Awake()
     {
         CountTotalFiends();
-        // backgroundMusicManager = FindObjectOfType<BackgroundMusicManager>();
-        // if (backgroundMusicManager == null)
-        // {
-            // Debug.Log("BackgroundMusicManager not found in the Game Scene!");
-        // }
+      
         playerMesh.transform.position = spawnPoint.transform.position;
     }
 
-
-
+    
 
     void Update()
     {
         ChangeGameState();
         uiManager.UpdateTestUI();
         CheckAllFiendsDead();
+
         //Put the checker for the buttons here
         if (playerAttack.actionState == PlayerAttack.PlayerActionStates.Null)
         {
             thirdPersonMovement.speed = 4f;
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                //Debug.Log("space key down");
+                tutorialUIAnim.ShowGlow(KeyCode.Space);
                 playerAttack.attackedEnemy = true;
                 playerAttack.AttackEnemyCoroutine = StartCoroutine(playerAttack.AttackCurrentEnemy());
 
             }
+            
             if (Input.GetKeyDown("1"))
             {
 
                 playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Hit;
-
+                uiElementScaler.EnlargeUIElement("1");
             }
             if (Input.GetKeyDown("2"))
             {
 
                 playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Grab;
-
+                uiElementScaler.EnlargeUIElement("2");
             }
             if (Input.GetKeyDown("3"))
             {
 
                 playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Bomb;
-
+                uiElementScaler.EnlargeUIElement("3");
             }
 
         }
@@ -299,6 +304,11 @@ public class GameController : MonoBehaviour
         */
 
 
+    }
+    private IEnumerator InitializeUI()
+    {
+        yield return new WaitForEndOfFrame(); // Ensures UI is fully initialized before running EnlargeUIElement
+        uiElementScaler.EnlargeUIElement("1");
     }
 
 }

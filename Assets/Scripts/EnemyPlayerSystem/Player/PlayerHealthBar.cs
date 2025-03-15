@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class PlayerHealthBar : MonoBehaviour
 {
     public Slider slider;
+    public GameObject yettyProfile;
     public float animationSpeed = 0.5f; // Duration of the animation
-
+    public UIElementScaler uiElementScaler;
     public void SetMaxHealth(int health)
     {
         slider.maxValue = health;
@@ -16,6 +17,7 @@ public class PlayerHealthBar : MonoBehaviour
 
     public void SetHealth(int health)
     {
+        uiElementScaler.PopUIElement("yettyProfile");
         // Animate the slider value change
         LeanTween.value(gameObject, slider.value, health, animationSpeed).setOnUpdate((float val) =>
         {

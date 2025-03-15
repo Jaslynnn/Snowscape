@@ -45,7 +45,13 @@ public class EnemyAnimation : MonoBehaviour
         if (!isAttacking)
         {
             animator.SetFloat("fiendSpeed", speed);
-            //Debug.Log("Animator speed set to: " + speed);
+            Debug.Log("Fiend Animator speed set to: " + speed);
+            if (speed > 0.5f)
+            {
+                audioManager.Play(FIEND_FOOTSTEPS);
+                Debug.Log("Playing FiendFootsteps");
+            }
+
         }
     }
 
@@ -86,7 +92,7 @@ public class EnemyAnimation : MonoBehaviour
     public void PlayFiendWalk()
     {
         ChangeAnimationState(FIEND_WALK);
-        audioManager.Play(FIEND_FOOTSTEPS);
+        audioManager.Play(FIEND_FOOTSTEPS); 
     }
 
     public void PlayFiendDead()

@@ -63,6 +63,7 @@ public class PlayerAttack : MonoBehaviour
     public EnemyHealthBar enemyHealthBar;
 
     [SerializeField] YettyAnimation yettyAnimation;
+        public UIElementScaler scaler;
     
     public enum PlayerActionStates
     {
@@ -240,17 +241,21 @@ public class PlayerAttack : MonoBehaviour
             if (weaponState == PlayerWeaponState.Hit)
             {
                 HitCurrentEnemy();
+                //scaler.EnlargeUIElement("1");
+                
             }
 
             if (weaponState == PlayerWeaponState.Grab)
             {
                 GrabCurrentEnemy();
+                //scaler.EnlargeUIElement("2");
             }
 
 
             if (weaponState == PlayerWeaponState.Bomb)
             {
                 //Put function for dropping bomb here
+                //scaler.EnlargeUIElement("3");
             }
 
             yield return new WaitForSeconds(1f);
