@@ -31,6 +31,8 @@ public class PlayerAttack : MonoBehaviour
     public GameObject objectToolTipUI;
     public GameObject playerGrabPoint;
     public NavMeshSurface navMeshSurface;
+    public GameObject explosionPrefab;
+    public GameObject snowBombDroppedPrefab;
 
     public bool selectedObject;
 
@@ -153,7 +155,7 @@ public class PlayerAttack : MonoBehaviour
                     //myVector1 - myVector2).normalized
                     //lastHighlighted.GetComponent<Renderer>().material.color = Color.blue;
 
-                    //Debug.DrawRay(playerMesh.transform.position, -(playerMesh.transform.position - item.transform.position).normalized * hit.distance, Color.red);
+                    Debug.DrawRay(playerMesh.transform.position, -(playerMesh.transform.position - item.transform.position).normalized * hit.distance, Color.red);
                     if(hit.distance < hitDistance)
                     {
                         //print(hit.distance);
@@ -250,11 +252,32 @@ public class PlayerAttack : MonoBehaviour
 
             if (weaponState == PlayerWeaponState.Bomb)
             {
-                //Put function for dropping bomb here
+                if (playerClass.noOfBombs > 0)
+                {
+                    //Put function for dropping bomb here
+                    //release the bomb transform parent , 
+                    StartCoroutine(DropBomb());
+                }
+                else
+                {
+                    yield return new WaitForSeconds(3f);
+                    weaponState = PlayerWeaponState.Hit;
+                }
+
             }
 
             yield return new WaitForSeconds(1f);
             actionState = PlayerActionStates.Null;
+    }
+
+    public IEnumerator DropBomb()
+    {
+        snowBombDroppedPrefab.SetActive(true);
+        snowBombDroppedPrefab.transform.parent = null;
+        playerClass.noOfBombs -= 1;
+        yield return new WaitForSeconds(5f);
+        snowBombDroppedPrefab.transform.parent = playerGrabPoint.transform;
+        snowBombDroppedPrefab.SetActive(false);
     }
 
     public void HitCurrentEnemy()
@@ -271,6 +294,11 @@ public class PlayerAttack : MonoBehaviour
             else
             {
                 Vector3 targetPosition = currentEnemyClass.attackedEnemy.transform.position;
+                
+                GameObject explosion = Instantiate(explosionPrefab, targetPosition, Quaternion.identity);
+                Destroy(explosion, 1f); // Destroy the explosion effect after 1 second
+                
+                
                 targetPosition.y = playerMesh.transform.position.y; // Keep the Y-axis unchanged
                 playerMesh.transform.LookAt(targetPosition);
 

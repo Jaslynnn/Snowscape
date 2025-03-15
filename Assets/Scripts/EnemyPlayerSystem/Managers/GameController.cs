@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
     public GameObject spawnPoint;
     public GameObject tutorial;
 
+
     [Header("Linked scripts")]
     //Scripts to be linked
     public PlayerClass playerClass;
@@ -101,13 +102,19 @@ public class GameController : MonoBehaviour
                 playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Grab;
 
             }
-            if (Input.GetKeyDown("3"))
+
+            if (playerClass.noOfBombs > 0)
             {
+                //Unfade the icon
+                if (Input.GetKeyDown("3"))
+                {
+                    playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Bomb;
+                   
 
-                playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Bomb;
-
+                }
             }
 
+            
         }
 
         if (playerAttack.actionState == PlayerAttack.PlayerActionStates.Defense)
@@ -255,7 +262,7 @@ public class GameController : MonoBehaviour
 
                     //Use sceneLoader to go to the next level
 
-                    GameFlowManager.Instance.LoadLevelSelection();
+                    //GameFlowManager.Instance.LoadLevelSelection();
                     playerClass.enemyDefeatedCounter = 0;
 
                 }

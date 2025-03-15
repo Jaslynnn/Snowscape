@@ -104,6 +104,7 @@ public class EnemyTracker : MonoBehaviour
         if (!enemyHealthBarObject)
         {
             enemyHealthBarObject = enemy.transform.Find("Canvas/EnemyHealthBar");
+            enemyHealthText = enemyHealthBarObject.Find("EnemyHealthNo").GetComponent<TMP_Text>();
             if (enemyHealthBarObject != null)
             {
                 
@@ -116,8 +117,8 @@ public class EnemyTracker : MonoBehaviour
             //Set the current enemy health
         }
         
-        enemyHealthBarObject = enemy.transform.Find("EnemyHealthBar");
-        //enemyHealthText = enemyHealthBarObject.Find("EnemyHealthNo").GetComponent<TMP_Text>();
+        enemyHealthBarObject = enemy.transform.Find("Canvas/EnemyHealthBar");
+        enemyHealthText = enemyHealthBarObject.Find("EnemyHealthNo").GetComponent<TMP_Text>();
             
             
         }

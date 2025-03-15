@@ -11,6 +11,7 @@ public class PlayerClass : MonoBehaviour
     [FormerlySerializedAs("PlayerDamageValue")] public int playerDamageValue = 10;
     [FormerlySerializedAs("PlayerThrowDamageValue")] public int playerThrowDamageValue = 20;
     public GameObject currentGrabbedObject;
+    public int noOfBombs;
     [FormerlySerializedAs("EnemyDefeatedCounter")] public int enemyDefeatedCounter;
   
     /*public PlayerClass( string playerName, int playerHealth , int playerDamageValue , int enemyDefeatedCounter , bool quest1 , bool quest2 )

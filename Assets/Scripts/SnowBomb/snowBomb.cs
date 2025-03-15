@@ -11,11 +11,12 @@ using UnityEngine;
 public class snowBomb : MonoBehaviour
 {
     public GameObject explosionEffect;
-    
+
+   
     public int bombDamageValue;
     public Coroutine ExplodeCoroutine;
     //Linked scripts
-    public EnemyTracker enemyTracker; 
+    public GameObject enemyTracker; 
     
     public void OnTriggerStay(Collider collision)
     {
@@ -32,12 +33,22 @@ public class snowBomb : MonoBehaviour
 
     public IEnumerator Explode(GameObject victim )
     {
-        yield return new WaitForSeconds(1f);
-        //DISPLAY some UI here as a countdown
-        Debug.Log(2);
-        yield return new WaitForSeconds(1f);  
-        Debug.Log(1);
-        enemyTracker.TakeDamage(victim, bombDamageValue,victim.tag); 
         
+        yield return new WaitForSeconds(1f);
+        GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Destroy(explosion, 1f); // Destroy the explosion effect after 1 second
+        //DISPLAY some UI here as a countdown
+        
+        yield return new WaitForSeconds(1f);  
+        
+        GameObject explosion1 = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Destroy(explosion1, 1f); // Destroy the explosion effect after 1 second
+        
+        yield return new WaitForSeconds(1f);  
+        GameObject explosion2 = Instantiate(explosionEffect, victim.transform.position, Quaternion.identity);
+        Destroy(explosion2, 1f); // Destroy the explosion effect after 1 second
+       
+        enemyTracker.GetComponent<EnemyTracker>().TakeDamage(victim, bombDamageValue,victim.tag); 
+        Debug.Log(victim.name);
     }
 }
