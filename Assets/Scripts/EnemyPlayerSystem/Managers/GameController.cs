@@ -29,11 +29,12 @@ public class GameController : MonoBehaviour
     public PlayerHealthBar playerHealthBar;
     public EnemyHealthBar enemyHealthBar;
     public LevelCompletion levelCompletion;
-    [SerializeField] YettyAnimation yettyAnimation;
+    public YettyAnimation yettyAnimation;
+    public AudioManager audioManager;
    
 
 
-    private BackgroundMusicManager backgroundMusicManager;
+  
     public enum GameStateEnums
     {
         NotStarted,
@@ -70,14 +71,6 @@ public class GameController : MonoBehaviour
         playerMesh.transform.position = spawnPoint.transform.position;
     }
 
-    private void Start()
-    {
-       if (backgroundMusicManager != null)
-        {
-            backgroundMusicManager.ChangeMusic(1); // Switches to soundtrack index 1
-        }
-
-    }
 
 
 
@@ -261,6 +254,7 @@ public class GameController : MonoBehaviour
                     Level = LevelsStateEnums.Level1;
 
                     //Use sceneLoader to go to the next level
+
                     GameFlowManager.Instance.LoadLevelSelection();
                     playerClass.enemyDefeatedCounter = 0;
 

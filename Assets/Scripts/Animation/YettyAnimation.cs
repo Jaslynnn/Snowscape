@@ -12,9 +12,17 @@ public class YettyAnimation : MonoBehaviour
     const string YETTY_IDLE_GRAB = "Yetty_Idle_Grab";
     const string YETTY_IDLE_STICK = "Yetty_Idle_Stick";
     const string YETTY_WALK = "Yetty_Walk";
+    const string YETTY_DEAD = "Yetty_Dead";
     const string YETTY_MOVEMENT = "Movement"; // Default state
 
     public string currentState;
+
+    public AudioManager audioManager;
+
+    // Sound names 
+    const string YETTY_WOOSH = "Woosh";
+    const string YETTY_FOOTSTEPS = "YettyFootstep";
+    const string YETTY_LOSE = "Lose";
 
     void Start()
     {
@@ -61,6 +69,7 @@ public class YettyAnimation : MonoBehaviour
 
     public void PlayYettyAttackStick()
     {
+        //audioManager.Play(YETTY_WOOSH);
         ChangeAnimationState(YETTY_ATTACK_STICK);
         StartCoroutine(ReturnToMovementDefault(YETTY_ATTACK_STICK));
     }
@@ -88,6 +97,12 @@ public class YettyAnimation : MonoBehaviour
         ChangeAnimationState(YETTY_IDLE);
     }
 
+    public void PlayYettyDead()
+    {
+        audioManager.Play(YETTY_LOSE);
+        ChangeAnimationState(YETTY_DEAD);
+    }
+
     private IEnumerator ReturnToMovementDefault(string currentAnimation)
     {
         yield return new WaitForSeconds(GetAnimationClipLength(currentAnimation));
@@ -98,6 +113,8 @@ public class YettyAnimation : MonoBehaviour
     {
         ChangeAnimationState(YETTY_MOVEMENT);
     }
+
+
 
     private float GetAnimationClipLength(string animationName)
     {

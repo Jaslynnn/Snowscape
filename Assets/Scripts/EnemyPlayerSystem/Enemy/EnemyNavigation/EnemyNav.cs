@@ -26,8 +26,10 @@ public class EnemyNav : MonoBehaviour
     public PlayerAttack playerAttack;
     public GameController gameController;
     public UIManager uiManager;
-    [SerializeField] EnemyAnimation enemyAnimation;
+    public EnemyAnimation enemyAnimation;
     public CameraShakeTrigger cameraShakeTrigger;
+
+
 
     private void Awake()
     {

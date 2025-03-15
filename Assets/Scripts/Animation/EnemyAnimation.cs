@@ -15,6 +15,16 @@ public class EnemyAnimation : MonoBehaviour
     const string FIEND_ATTACKED = "Fiend_Attacked";
     const string FIEND_ATTACK = "Fiend_Attack";
     const string FIEND_MOVEMENT = "Fiend_Movement";
+    const string FIEND_DEAD = "Fiend_Death";
+
+    public AudioManager audioManager;
+
+    // Sound names 
+    const string FIEND_BITE = "FiendBite";
+    const string FIEND_SNARL = "FiendSnarl";
+    const string FIEND_WHIMPER = "FiendWhimper";
+    const string FIEND_FOOTSTEPS = "FiendFootsteps";
+    const string FIEND_BARK = "FiendBark";
 
     private void Start()
     {
@@ -22,6 +32,10 @@ public class EnemyAnimation : MonoBehaviour
         if (animator == null)
         {
             Debug.LogWarning("Enemy animator is missing!");
+        }
+        else
+        {
+            Debug.Log(animator + "found");
         }
     }
 
@@ -40,7 +54,7 @@ public class EnemyAnimation : MonoBehaviour
         // Stop the same animation from interrupting itself
         if (currentState == newState) return;
 
-        // Play the animation
+        // Play the animation   
         animator.Play(newState);
 
         // Reassign the current state
@@ -50,18 +64,21 @@ public class EnemyAnimation : MonoBehaviour
     public void PlayFiendChase()
     {
         ChangeAnimationState(FIEND_CHASE);
+        audioManager.Play(FIEND_FOOTSTEPS);
     }
 
     public void PlayFiendAttacked()
     {
         ChangeAnimationState(FIEND_ATTACKED);
+        audioManager.Play(FIEND_SNARL);
     }
 
     public void PlayFiendAttack()
     {
+        audioManager.Play(FIEND_BITE);
         isAttacking = true;
         ChangeAnimationState(FIEND_ATTACK);
-        //Debug.Log("FIENDATTACK STATE");
+        
 
         StartCoroutine(ReturnToDefaultState());
     }
@@ -69,6 +86,13 @@ public class EnemyAnimation : MonoBehaviour
     public void PlayFiendWalk()
     {
         ChangeAnimationState(FIEND_WALK);
+        audioManager.Play(FIEND_FOOTSTEPS);
+    }
+
+    public void PlayFiendDead()
+    {
+        audioManager.Play(FIEND_WHIMPER);
+        ChangeAnimationState(FIEND_DEAD);
     }
 
     public void PlayFiendIdle()

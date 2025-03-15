@@ -22,6 +22,8 @@ public class EnemyTracker : MonoBehaviour
 
     public EnemyHealthBar enemyHealthBar;
     // Start is called before the first frame update
+
+    public EnemyAnimation enemyAnimation;
     private void Awake()
     {
         EnemyTranslation = ScriptableObject.Instantiate(EnemyTranslationType);
@@ -49,16 +51,20 @@ public class EnemyTracker : MonoBehaviour
                 currentEnemyClass.attackedEnemyHealth = entry.EnemyHealth;
                 //int currentEnemyHealth = entry.EnemyHealth;
                 entry.EnemyHealth -= damage;
+                enemyAnimation.PlayFiendAttacked();
+                Debug.Log("Fiend attacked" + entry.EnemyHealth);
               currentEnemyClass.attackedEnemyHealth = entry.EnemyHealth;
                 //***Add abit of force here to make the object shake so that player gets the hint to keep on hitting it
                 if (entry.EnemyHealth <= 0) 
                 {
 
                     //***Place destruction code here
+                    enemyAnimation.PlayFiendAttacked();
                     enemies.Remove(entry);
                     entry.EnemyObject.SetActive(false);
                     if (entry.EnemyObject.CompareTag("Fiend"))
                     {
+                    // put dead anim here + 3 secs
                     playerClass.enemyDefeatedCounter += 1;
 
                     }
