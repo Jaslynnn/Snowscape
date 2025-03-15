@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 /// </summary>
 public class UIManager : MonoBehaviour
 {
-    [FormerlySerializedAs("playerHP")] [Header("Player Stats")]
+    /*[FormerlySerializedAs("playerHP")] [Header("Player Stats")]
     //player Stats
     public TMP_Text playerHp;
     public TMP_Text playerWeapon;
@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text enemiesLeft;
     
 
-
+    */
     [Header("GameState")]
     public TMP_Text currentGameState;
 
@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
     
     
     //Placed in update function of the gameController to update the UI
-    public void UpdateTestUI()
+    /*public void UpdateTestUI()
     {
         playerHp.text = " HP : " + playerClass.playerHealth.ToString();
 
@@ -125,6 +125,6 @@ public class UIManager : MonoBehaviour
             level1CompletedPage.SetActive(false);
 
         }
-    }
+    }*/
 
 }
