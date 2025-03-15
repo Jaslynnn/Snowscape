@@ -45,16 +45,20 @@ public class EnemyAnimation : MonoBehaviour
         if (!isAttacking)
         {
             animator.SetFloat("fiendSpeed", speed);
-            Debug.Log("Fiend Animator speed set to: " + speed);
-            if (speed > 0.5f)
+            //Debug.Log("Fiend Animator speed set to: " + speed);
+            /*if (speed > 0.5f)
             {
                 audioManager.Play(FIEND_FOOTSTEPS);
                 Debug.Log("Playing FiendFootsteps");
-            }
+            }*/
 
         }
     }
 
+    private void Update()
+    {
+        //AnimatorStateInf
+    }
     void ChangeAnimationState(string newState)
     {
         // Stop the same animation from interrupting itself
@@ -89,11 +93,11 @@ public class EnemyAnimation : MonoBehaviour
         StartCoroutine(ReturnToDefaultState());
     }
 
-    public void PlayFiendWalk()
+    /*public void PlayFiendWalk()
     {
         ChangeAnimationState(FIEND_WALK);
         audioManager.Play(FIEND_FOOTSTEPS); 
-    }
+    }*/
 
     public void PlayFiendDead()
     {
@@ -101,10 +105,10 @@ public class EnemyAnimation : MonoBehaviour
         ChangeAnimationState(FIEND_DEAD);
     }
 
-    public void PlayFiendIdle()
+    /*public void PlayFiendIdle()
     {
         ChangeAnimationState(FIEND_IDLE);
-    }
+    }*/
 
     private IEnumerator ReturnToDefaultState()
     {

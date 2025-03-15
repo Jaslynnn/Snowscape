@@ -13092,7 +13092,7 @@ MonoBehaviour:
     loop: 0
   - name: Theme
     clip: {fileID: 8300000, guid: e846780c93c1b334fb5dbd2a4ea0d94b, type: 3}
-    volume: 1
+    volume: 0.351
     pitch: 1
     source: {fileID: 0}
     loop: 1
@@ -13133,11 +13133,11 @@ MonoBehaviour:
     source: {fileID: 0}
     loop: 0
   - name: FiendFootsteps
-    clip: {fileID: 8300000, guid: 04ca81053fc98334fbcb7fbfb4c47127, type: 3}
+    clip: {fileID: 8300000, guid: f7225d837ea9ac649bf85d4dd821a308, type: 3}
     volume: 1
-    pitch: 1
+    pitch: 0.83
     source: {fileID: 0}
-    loop: 0
+    loop: 1
   - name: Woosh
     clip: {fileID: 8300000, guid: 7c88995862c00964c9aaaf676928e7fe, type: 3}
     volume: 1
@@ -19575,13 +19575,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1309306202}
   - {fileID: 1655302136}
   - {fileID: 1129356687}
   - {fileID: 733746533}
   - {fileID: 1408867317}
   - {fileID: 1246379421}
   - {fileID: 1228196746}
+  - {fileID: 1309306202}
   - {fileID: 1518544025}
   - {fileID: 1258628361}
   m_Father: {fileID: 0}
