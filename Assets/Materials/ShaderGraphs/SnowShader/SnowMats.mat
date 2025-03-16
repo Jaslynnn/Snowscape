@@ -7,10 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MAT_ground
+  m_Name: SnowMats
   m_Shader: {fileID: -6465566751694194690, guid: 04df70d5393334a2c80f2bc5f15a5f2f,
     type: 3}
-  m_Parent: {fileID: 2100000, guid: 45e8ff0e5c0494ec1951a5daa24cc88a, type: 2}
+  m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -23,12 +23,29 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
-    m_Colors: []
+    m_Floats:
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Water_Depth: 5.19
+    m_Colors:
+    - _Deep_Color: {r: 0.5283019, g: 0.5145959, b: 0.44606623, a: 0}
+    - _Shallow_Color: {r: 0.5377358, g: 0.5199804, b: 0.5199804, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &791815460547529880
+--- !u!114 &6442305950821044678
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

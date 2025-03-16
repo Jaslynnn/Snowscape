@@ -57,11 +57,18 @@ public class EnemyTracker : MonoBehaviour
                 }
                 else // Health is 0, play the death animation
                 {
+                    enemies.Remove(entry);
                     if (entry.EnemyObject.CompareTag("Fiend"))
                     {
                         // Play death animation and then deactivate after delay
-                        HandleEnemyDeath(entry.EnemyObject);
+                        UnityEngine.AI.NavMeshAgent agent = entry.EnemyObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+                        agent.enabled = false;
+                        entry.EnemyObject.layer = LayerMask.NameToLayer("Default");
+                        entry.EnemyObject.tag = "Untagged";
+                        StartCoroutine(HandleEnemyDeath(entry.EnemyObject));
+                        
                         playerClass.enemyDefeatedCounter += 1;
+                        
                     }
                 }
 
@@ -88,6 +95,7 @@ public class EnemyTracker : MonoBehaviour
             {
                 enemyHealthBarObject = enemy.transform.Find("Canvas/EnemyHealthBar");
                 enemyHealthText = enemyHealthBarObject.Find("EnemyHealthNo").GetComponent<TMP_Text>();
+                
                 if (enemyHealthBarObject != null)
                 {
                     Debug.Log(enemyHealthBarObject.gameObject.name);

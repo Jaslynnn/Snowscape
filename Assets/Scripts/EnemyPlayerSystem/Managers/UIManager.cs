@@ -1,5 +1,7 @@
 
+using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using TMPro;
 
 using UnityEngine.Serialization;
@@ -33,8 +35,10 @@ public class UIManager : MonoBehaviour
     public TMP_Text currentGameState;
 
     [FormerlySerializedAs("GameOverPage")] [Header("GameUI")]
-    public GameObject gameOverPage;
-    [FormerlySerializedAs("Level1CompletedPage")] public GameObject level1CompletedPage;
+    public GameObject levelCompletedCanvas;
+    public GameObject gameOverCanvas;
+    public TMP_Text bombText;
+  
 
 
     [Header("Linked scripts")]
@@ -46,11 +50,9 @@ public class UIManager : MonoBehaviour
     public PlayerHealthBar playerHealthBar;
     public UIElementScaler uiElementScaler;
 
-    public GameObject levelCompletedCanvas;
-    public GameObject gameOverCanvas;
     private void Awake()
     {
-        gameOverPage.SetActive(false);
+        gameOverCanvas.SetActive(false);
         levelCompletedCanvas.SetActive(false);   
 
     }
@@ -73,10 +75,17 @@ public class UIManager : MonoBehaviour
     public void UpdateFiendUI()
     {
         enemiesLeft.text = playerClass.enemyDefeatedCounter.ToString() + " / " + currentEnemyClass.totalNoOfFiends.ToString();
+        ShowBombNumber();
     }
 
-    public void CallLevelCompletedCanvas()
+    public void ShowBombNumber()
     {
+        bombText.text = playerClass.noOfBombs.ToString();
+    }
+
+    public IEnumerator CallLevelCompletedCanvas()
+    {
+        yield return new WaitForSeconds(3f);
         levelCompletedCanvas.SetActive(true);
     }
     public void CallGameOverCanvas()

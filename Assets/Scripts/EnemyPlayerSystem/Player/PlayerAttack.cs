@@ -33,7 +33,9 @@ public class PlayerAttack : MonoBehaviour
     public NavMeshSurface navMeshSurface;
     public GameObject explosionPrefab;
     public GameObject snowBombDroppedPrefab;
-
+    private Quaternion targetRotation; // Store target rotation
+    public float rotationSpeed = 5f;
+    
     public bool selectedObject;
 
     public float hitDistance = 2f;
@@ -90,6 +92,22 @@ public class PlayerAttack : MonoBehaviour
         _enemyTranslation = ScriptableObject.Instantiate(enemyTranslationType);
         
    }
+    
+    private void FixedUpdate()
+    {
+        if (actionState == PlayerActionStates.Attack)
+        {
+            if (playerMesh)
+            {
+                playerMesh.transform.rotation = Quaternion.Slerp(
+                    playerMesh.transform.rotation,
+                    targetRotation,
+                    Time.deltaTime * rotationSpeed
+                );
+            }
+        }
+  
+    }
 
     public void OnTriggerEnter(Collider collision)
     {
@@ -290,6 +308,7 @@ public class PlayerAttack : MonoBehaviour
             if (!currentEnemyClass.attackedEnemy)
             {
                 Debug.Log("Nothing to Attack");
+                targetRotation = transform.rotation;
             }
             else
             {
@@ -300,7 +319,7 @@ public class PlayerAttack : MonoBehaviour
                 
                 
                 targetPosition.y = playerMesh.transform.position.y; // Keep the Y-axis unchanged
-                playerMesh.transform.LookAt(targetPosition);
+                targetRotation = Quaternion.LookRotation(targetPosition - playerMesh.transform.position);
 
                 //currentEnemyClass.currentEnemy.GetComponent<Renderer>().material.color = Color.white;
                 enemyTracker.TakeDamage(currentEnemyClass.currentEnemy.gameObject, playerClass.playerDamageValue,
@@ -314,7 +333,7 @@ public class PlayerAttack : MonoBehaviour
                             playerClass.playerHealth += 10;
                         }
 
-                        Fragmentation(currentEnemyClass.attackedEnemy);
+                        // Fragmentation(currentEnemyClass.attackedEnemy);
 
                     }
                 }
@@ -344,8 +363,13 @@ public class PlayerAttack : MonoBehaviour
             grabbedObject = true;
             if (playerClass.currentGrabbedObject.CompareTag("Fiend"))
             {
+                
                 UnityEngine.AI.NavMeshAgent agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
-                agent.enabled = false;
+                if (agent != null)
+                {
+                    agent.enabled = false;
+                }
+                
             }
         }
         else { Debug.Log("Nothing to Grab"); }
@@ -391,25 +415,26 @@ public class PlayerAttack : MonoBehaviour
             direction.Normalize();  // Make sure the direction is normalized
 
             // Add force in the direction
-            grabbedRb.AddForce(direction * 7f, ForceMode.Impulse);  // Adjust the force magnitude needed
+            grabbedRb.AddForce(direction * 11f, ForceMode.Impulse);  // Adjust the force magnitude needed
             // enemyTracker.TakeDamage(playerClass.currentGrabbedObject.gameObject, playerClass.playerThrowDamageValue, currentEnemyClass.currentEnemy.tag);
 
             Debug.Log($"Force applied with magnitude: {direction.magnitude * 1f}");
             if (playerClass.currentGrabbedObject.CompareTag("Fiend"))
             {
+                yield return new WaitForSeconds(2f);
                 UnityEngine.AI.NavMeshAgent agent = playerClass.currentGrabbedObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
                 agent.enabled = true;
                
 
             }
 
+            grabbedRb.isKinematic = true; 
             Debug.Log("huh");
             playerClass.currentGrabbedObject = null;
         grabbedObject = false;
             actionState = PlayerActionStates.Attack;
             BakeNavMesh();
             yield return new WaitForSeconds(1f);
-            grabbedRb.isKinematic = true; 
             actionState = PlayerActionStates.Null; 
         }
     }

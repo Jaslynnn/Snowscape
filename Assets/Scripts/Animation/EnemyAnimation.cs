@@ -118,6 +118,7 @@ public class EnemyAnimation : MonoBehaviour
     {
         audioManager.Play(FIEND_WHIMPER);
         Debug.Log("CHANGED ANIM STATE FIEND DEAD");
+        
         ChangeAnimationState(FIEND_DEAD);
     }
 

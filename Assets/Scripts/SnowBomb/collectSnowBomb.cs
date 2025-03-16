@@ -6,6 +6,7 @@ public class collectSnowBomb : MonoBehaviour
 {
    public PlayerClass playerClass;
    public bool collectingBomb;
+   public PlayerHealthBar playerHealthBar;
    public void OnTriggerEnter(Collider collision)
    {
       if (collision.gameObject.CompareTag("Player"))
@@ -23,8 +24,15 @@ public class collectSnowBomb : MonoBehaviour
    public IEnumerator BombCollected()
    {
       collectingBomb = true;
+      
      if (collectingBomb = true)
       {
+         if (playerClass.playerHealth < 100)
+         {
+            playerClass.playerHealth += 10;
+            playerHealthBar.SetHealth(playerClass.playerHealth);
+         }
+         
          playerClass.noOfBombs += 1;
 
       }
