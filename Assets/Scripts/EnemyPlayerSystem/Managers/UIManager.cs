@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.UI;
 
 using UnityEngine.Serialization;
 
@@ -38,7 +39,7 @@ public class UIManager : MonoBehaviour
     public GameObject levelCompletedCanvas;
     public GameObject gameOverCanvas;
     public TMP_Text bombText;
-  
+    public Image blackPanel; // Assign this in the Inspector
 
 
     [Header("Linked scripts")]
@@ -54,6 +55,8 @@ public class UIManager : MonoBehaviour
     {
         gameOverCanvas.SetActive(false);
         levelCompletedCanvas.SetActive(false);   
+        blackPanel.gameObject.SetActive(true);
+        LeanTween.init(1200);
 
     }
     void Start()
@@ -92,6 +95,21 @@ public class UIManager : MonoBehaviour
     {
         gameOverCanvas.SetActive(true); 
     }
+    public void FadeOutPanel(float duration = 1.5f)
+    {
+        LeanTween.alpha(blackPanel.rectTransform, 0f, duration).setEase(LeanTweenType.easeOutQuad);
+        
+    }
+    public void FadeOutPanelFalse()
+    {
+            blackPanel.gameObject.SetActive(false);
+    }
+    public void FadeInPanel(float duration = 1.5f)
+    {
+        blackPanel.gameObject.SetActive(true);
+        LeanTween.alpha(blackPanel.rectTransform, 1f, duration).setEase(LeanTweenType.easeInQuad);
+    }
+    
 
 
     //Placed in update function of the gameController to update the UI

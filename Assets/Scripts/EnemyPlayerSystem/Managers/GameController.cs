@@ -106,22 +106,30 @@ public class GameController : MonoBehaviour
             
             if (Input.GetKeyDown("1"))
             {
+                audioManager.Play("ButtonPressed");
 
                 playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Hit;
                 uiElementScaler.EnlargeUIElement("1");
             }
             if (Input.GetKeyDown("2"))
             {
-
+                audioManager.Play("ButtonPressed");
+                
                 playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Grab;
                 uiElementScaler.EnlargeUIElement("2");
             }
-
+            
+            if (Input.GetKeyDown("3"))
+            {
+                audioManager.Play("ButtonHover");
+                
             if (playerClass.noOfBombs > 0)
             {
+
                 //Unfade the icon
-                if (Input.GetKeyDown("3"))
-                {
+               
+                    audioManager.Play("ButtonPressed");
+
                     uiElementScaler.EnlargeUIElement("3");
                     playerAttack.weaponState = PlayerAttack.PlayerWeaponState.Bomb;
                    
@@ -177,15 +185,18 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameStateEnums.Ended:
-                Debug.Log("Game Over: Health = 0");
+                
                 if (playerClass.playerHealth <= 0)
                 {
                 yettyAnimation.PlayYettyDead();  // Play the Yetty dead animation
                 StartCoroutine(HandleGameOver()); // Call coroutine to handle game over flow
                 }
-                
-                StartCoroutine(uiManager.CallLevelCompletedCanvas());
-                audioManager.Play("LevelCompleted");
+                else
+                {
+                    StartCoroutine(uiManager.CallLevelCompletedCanvas());
+                    audioManager.Play("LevelCompleted");
+                }
+
                 
                 
                 
@@ -197,6 +208,7 @@ public class GameController : MonoBehaviour
     private IEnumerator HandleGameOver()
     {
         // Start the death animation and wait for it to finish
+        playerClass.playerHealth = 0;
         yield return StartCoroutine(yettyAnimation.HandleYettyDeath());
         uiManager.CallGameOverCanvas();
     }
@@ -241,7 +253,9 @@ public class GameController : MonoBehaviour
 
     public IEnumerator TutorialCountdown()
     {
-        yield return new WaitForSeconds(4f);
+        uiManager.FadeOutPanel();
+        yield return new WaitForSeconds(1.5f);
+        uiManager.FadeOutPanelFalse();
         tutorial.SetActive(false);
         State = GameStateEnums.Tutorial;
     }
@@ -322,11 +336,22 @@ public class GameController : MonoBehaviour
     //Linked to the button that pops up when the game ends
     public void ReloadScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartCoroutine( PlayAgain());
     }
 
-    public void PlayAgain()
+    public void LoadHomePage()
     {
+     StartCoroutine( LoadHomeScene());
+    }
+
+
+    public IEnumerator PlayAgain()
+    {
+        audioManager.Play("ButtonPressed");
+        uiManager.FadeInPanel();
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         //SceneManager.LoadScene("FiendControl");
 
         /*gameTime = 0;
@@ -343,6 +368,13 @@ public class GameController : MonoBehaviour
         */
 
 
+    }
+    public IEnumerator LoadHomeScene()
+    {
+        audioManager.Play("ButtonPressed");
+        uiManager.FadeInPanel();
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("CoverPage");
     }
     private IEnumerator InitializeUI()
     {

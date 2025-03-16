@@ -259,7 +259,7 @@ public class PlayerAttack : MonoBehaviour
             actionState = PlayerActionStates.Attack;
             if (weaponState == PlayerWeaponState.Hit)
             {
-                HitCurrentEnemy();
+                StartCoroutine(HitCurrentEnemy());
             }
 
             if (weaponState == PlayerWeaponState.Grab)
@@ -298,7 +298,7 @@ public class PlayerAttack : MonoBehaviour
         snowBombDroppedPrefab.SetActive(false);
     }
 
-    public void HitCurrentEnemy()
+    public IEnumerator HitCurrentEnemy()
     {
         if (attackedEnemy)
         {
@@ -313,10 +313,7 @@ public class PlayerAttack : MonoBehaviour
             else
             {
                 Vector3 targetPosition = currentEnemyClass.attackedEnemy.transform.position;
-                
-                GameObject explosion = Instantiate(explosionPrefab, targetPosition, Quaternion.identity);
-                Destroy(explosion, 1f); // Destroy the explosion effect after 1 second
-                
+
                 
                 targetPosition.y = playerMesh.transform.position.y; // Keep the Y-axis unchanged
                 targetRotation = Quaternion.LookRotation(targetPosition - playerMesh.transform.position);
@@ -339,6 +336,10 @@ public class PlayerAttack : MonoBehaviour
                 }
  
                 attackedEnemy = false;
+                yield return new WaitForSeconds(.5f);
+                GameObject explosion = Instantiate(explosionPrefab, targetPosition, Quaternion.identity);
+                Destroy(explosion, 1f); // Destroy the explosion effect after 1 second
+                
             }
 
         }  

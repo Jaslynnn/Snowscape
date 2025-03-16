@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private BackgroundMusicManager bgmManager;
+   
+    public AudioManager audioManager;
 
-    private void Awake()
+
+    public void PlayStartButtonHoverAudio()
     {
-        bgmManager = FindObjectOfType<BackgroundMusicManager>();
-        if (bgmManager == null)
-            Debug.LogWarning("No BackgroundMusicManager found in Main Menu!");
+        audioManager.Play("ButtonHover");
     }
 
-    private void Start()
+    public void PlayStartButtonClickedAudio()
     {
-        if (bgmManager != null)
-            bgmManager.PlayMusic(0);
-
+        audioManager.Play("ButtonPressed");
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,13 +14,49 @@ public class MainMenuUIAnim : MonoBehaviour
     public float animationSpeed = 0.2f; // Speed of the hover/click animation on button
     public float initialOpacity = 0.5f; // Initial opacity (dark before hover)
 
+    public Image blackPanel;
+    public AudioManager audioManager;
+    
     private Dictionary<GameObject, Vector3> originalScales = new Dictionary<GameObject, Vector3>();
     private Dictionary<GameObject, CanvasGroup> buttonCanvasGroups = new Dictionary<GameObject, CanvasGroup>();
 
+    private void Awake()
+    {
+        
+        LeanTween.init(800);
+        
+        
+    }
+    public void FadeOutPanel(float duration = 1.5f)
+    {
+        blackPanel.gameObject.SetActive(true);
+        LeanTween.alpha(blackPanel.rectTransform, 0f, duration).setEase(LeanTweenType.easeOutQuad);
+        
+    }
+    public void FadeOutPanelFalse()
+    {
+        blackPanel.gameObject.SetActive(false);
+    }
+    public void FadeInPanel(float duration = 1.5f)
+    {
+        blackPanel.gameObject.SetActive(true);
+        LeanTween.alpha(blackPanel.rectTransform, 1f, duration).setEase(LeanTweenType.easeInQuad);
+    }
+    public IEnumerator StartMenuCoroutine()
+    {
+        FadeOutPanel();
+        yield return new WaitForSeconds(1.5f);
+        FadeOutPanelFalse();
+
+    }
     void Start()
     {
         // Start floating effect for title
+        blackPanel.gameObject.SetActive(true);
+        StartCoroutine(StartMenuCoroutine());
         StartTitleFloating();
+        
+        
 
         // Initialize button effects for each button in the list
         foreach (Button button in buttons)
@@ -76,6 +113,7 @@ public class MainMenuUIAnim : MonoBehaviour
 
         // Increase opacity on hover
         buttonCanvasGroups[button].alpha = 1f; // Fully visible when hovered
+        audioManager.Play("ButtonHover");
         //SoundManager.PlaySound(SoundType.HOVER);
     }
 

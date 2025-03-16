@@ -10,6 +10,7 @@ public class GameFlowManager : MonoBehaviour
     public GameObject mainMenuCanvas; 
     public GameObject levelSelectionCanvas;
     private BackgroundMusicManager backgroundMusicManager;
+    public MainMenuUIAnim mainMenuUIAnim;
     private void Awake()
     {
         if (Instance == null)
@@ -38,6 +39,14 @@ public class GameFlowManager : MonoBehaviour
 
     public void StartGame()
     {
+        StartCoroutine(StartGameCoroutine());
+
+    }
+
+    public IEnumerator StartGameCoroutine()
+    {
+        mainMenuUIAnim.FadeInPanel();
+        yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("Level2Bomb"); //Load tutorial
         
     }

@@ -25,7 +25,7 @@ public class collectSnowBomb : MonoBehaviour
    {
       collectingBomb = true;
       
-     if (collectingBomb = true)
+     if (collectingBomb == true)
       {
          if (playerClass.playerHealth < 100)
          {
