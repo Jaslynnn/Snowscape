@@ -46,13 +46,13 @@ public class TutorialUIAnim : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Spacebar Pressed");
+            //Debug.Log("Spacebar Pressed");
             ShowGlow(KeyCode.Space);
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            Debug.Log("Spacebar Released");
+            //Debug.Log("Spacebar Released");
             HideGlow(KeyCode.Space);
         }
     }

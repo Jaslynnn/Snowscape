@@ -14,15 +14,21 @@ public class PlayerClass : MonoBehaviour
     public int noOfBombs;
     [FormerlySerializedAs("EnemyDefeatedCounter")] public int enemyDefeatedCounter;
   
-    /*public PlayerClass( string playerName, int playerHealth , int playerDamageValue , int enemyDefeatedCounter , bool quest1 , bool quest2 )
+  
+    public PlayerClass( string playerName, int playerHealth , int playerDamageValue , int enemyDefeatedCounter , bool quest1 , bool quest2 )
     {
-        this.PlayerName = playerName;
+        
+        this.enemyDefeatedCounter = enemyDefeatedCounter;
+        /*this.PlayerName = playerName;
         this.playerHealth = playerHealth;
         this.playerDamageValue = playerDamageValue;
-        this.enemyDefeatedCounter = enemyDefeatedCounter;
         this.Quest1 = quest1;
-        this.Quest2 = quest2;
+        this.Quest2 = quest2;*/
+        
+        Debug.Log("playerclass Enlarge UiElement");
     }
-    */
+    
 
 }
+
+

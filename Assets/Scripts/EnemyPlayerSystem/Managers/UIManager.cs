@@ -24,10 +24,11 @@ public class UIManager : MonoBehaviour
     public TMP_Text enemyName;
     public TMP_Text attackedEnemy;
     [FormerlySerializedAs("attackedEnemyHP")] public TMP_Text attackedEnemyHp;
-    public TMP_Text enemiesLeft;
     
-
     */
+
+    public TMP_Text enemiesLeft;
+
     [Header("GameState")]
     public TMP_Text currentGameState;
 
@@ -43,20 +44,23 @@ public class UIManager : MonoBehaviour
     public CurrentEnemyClass currentEnemyClass;
     public GameController gameController;
     public PlayerHealthBar playerHealthBar;
+    public UIElementScaler uiElementScaler;
 
+    public GameObject levelCompletedCanvas;
+    public GameObject gameOverCanvas;
     private void Awake()
     {
         gameOverPage.SetActive(false);
+        levelCompletedCanvas.SetActive(false);   
 
     }
     void Start()
     {
         playerClass.playerHealth = playerClass.playerMaxHealth;
         playerHealthBar.SetMaxHealth(playerClass.playerMaxHealth);
-    }//THis function updates the player's health bar
+    }   //THis function updates the player's health bar
    
-   
-   
+  
     public void UpdatePlayerHealthBar()
     {
         playerHealthBar.SetHealth(playerClass.playerHealth); 
@@ -65,8 +69,22 @@ public class UIManager : MonoBehaviour
     {
         
     }
-    
-    
+
+    public void UpdateFiendUI()
+    {
+        enemiesLeft.text = playerClass.enemyDefeatedCounter.ToString() + " / " + currentEnemyClass.totalNoOfFiends.ToString();
+    }
+
+    public void CallLevelCompletedCanvas()
+    {
+        levelCompletedCanvas.SetActive(true);
+    }
+    public void CallGameOverCanvas()
+    {
+        gameOverCanvas.SetActive(true); 
+    }
+
+
     //Placed in update function of the gameController to update the UI
     /*public void UpdateTestUI()
     {

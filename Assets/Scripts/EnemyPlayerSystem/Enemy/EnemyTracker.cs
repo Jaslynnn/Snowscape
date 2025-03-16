@@ -19,11 +19,9 @@ public class EnemyTracker : MonoBehaviour
     // Linking scripts 
     public PlayerClass playerClass;
     public CurrentEnemyClass currentEnemyClass;
-
     public EnemyHealthBar enemyHealthBar;
-    // Start is called before the first frame update
-
     public EnemyAnimation enemyAnimation;
+
     private void Awake()
     {
         EnemyTranslation = ScriptableObject.Instantiate(EnemyTranslationType);
@@ -32,103 +30,97 @@ public class EnemyTracker : MonoBehaviour
 
     public void TakeDamage(GameObject enemy, int damage, string enemyTag)
     {
-        //Checks through the list of classes to see whether the enemy name exists
+        // Remove all enemies that are either null, inactive, or have 0 health
         Debug.Log(enemy);
         enemies.RemoveAll(entry => entry == null || entry.EnemyObject == null || entry.EnemyHealth <= 0);
+
         foreach (EnemyTranslationTableEntry entry in enemies.ToList())
         {
-
-            if (entry.EnemyObject == null || !entry.EnemyObject.activeInHierarchy) // Also checks if the enemy is inactive
+            if (entry.EnemyObject == null || !entry.EnemyObject.activeInHierarchy) // Skip inactive enemies
             {
                 // Remove the destroyed enemy from the list
                 enemies.Remove(entry);
-                continue; // Skip processing this entry since it's already destroyed
+                continue;
             }
 
             if (entry.EnemyObject == enemy)
             {
-
                 currentEnemyClass.attackedEnemyHealth = entry.EnemyHealth;
-                //int currentEnemyHealth = entry.EnemyHealth;
                 entry.EnemyHealth -= damage;
-                enemyAnimation.PlayFiendAttacked();
-                Debug.Log("Fiend attacked" + entry.EnemyHealth);
-              currentEnemyClass.attackedEnemyHealth = entry.EnemyHealth;
-                //***Add abit of force here to make the object shake so that player gets the hint to keep on hitting it
-                if (entry.EnemyHealth <= 0) 
-                {
+                Debug.Log("Fiend attacked, health: " + entry.EnemyHealth);
+                currentEnemyClass.attackedEnemyHealth = entry.EnemyHealth;
 
-                    //***Place destruction code here
+                // If health is still above 0, play the attacked animation
+                if (entry.EnemyHealth > 0)
+                {
                     enemyAnimation.PlayFiendAttacked();
-                    enemies.Remove(entry);
-                    entry.EnemyObject.SetActive(false);
+                }
+                else // Health is 0, play the death animation
+                {
                     if (entry.EnemyObject.CompareTag("Fiend"))
                     {
-                    // put dead anim here + 3 secs
-                    playerClass.enemyDefeatedCounter += 1;
-
+                        // Play death animation and then deactivate after delay
+                        HandleEnemyDeath(entry.EnemyObject);
+                        playerClass.enemyDefeatedCounter += 1;
                     }
-
-
-
                 }
+
                 return;
-
             }
-              
-         
-                    
-            
-
-                
         }
-       
-        if (enemy) 
+
+        // Handle the case for new enemies
+        if (enemy)
         {
             EnemyTranslationTableEntry enemy01 = EnemyTranslation.TakeDamage(enemy, damage, enemyTag);
 
             if (enemy01 != null && enemy01.EnemyHealth > 0 && !enemies.Contains(enemy01))
             {
                 enemies.Add(enemy01);
-            currentEnemyClass.attackedEnemyHealth = enemy01.EnemyHealth;
+                currentEnemyClass.attackedEnemyHealth = enemy01.EnemyHealth;
             }
         }
 
-
-        //Adds new class to the list of classes:\
-        //returns the enemyHealth
-        //EnemyTranslation.TakeDamage(enemyName, damage, enemyTag);
+        // Update health bar if needed
         if (enemy.CompareTag("Fiend"))
         {
-            
-        if (!enemyHealthBarObject)
-        {
-            enemyHealthBarObject = enemy.transform.Find("Canvas/EnemyHealthBar");
-            enemyHealthText = enemyHealthBarObject.Find("EnemyHealthNo").GetComponent<TMP_Text>();
-            if (enemyHealthBarObject != null)
+            if (!enemyHealthBarObject)
             {
-                
-            Debug.Log(enemyHealthBarObject.gameObject.name);
-            enemyHealthBarObject.gameObject.SetActive(true);
-            // enemyHealthBar.SetMaxHealth(currentEnemyClass.attackedEnemyHealth);
-            // enemyHealthBar.SetHealth(currentEnemyClass.attackedEnemyHealth);
-            enemyHealthText.text = currentEnemyClass.attackedEnemyHealth.ToString();
+                enemyHealthBarObject = enemy.transform.Find("Canvas/EnemyHealthBar");
+                enemyHealthText = enemyHealthBarObject.Find("EnemyHealthNo").GetComponent<TMP_Text>();
+                if (enemyHealthBarObject != null)
+                {
+                    Debug.Log(enemyHealthBarObject.gameObject.name);
+                    enemyHealthBarObject.gameObject.SetActive(true);
+                    enemyHealthText.text = currentEnemyClass.attackedEnemyHealth.ToString();
+                }
             }
-            //Set the current enemy health
         }
-        
-        enemyHealthBarObject = enemy.transform.Find("Canvas/EnemyHealthBar");
-        enemyHealthText = enemyHealthBarObject.Find("EnemyHealthNo").GetComponent<TMP_Text>();
-            
-            
-        }
-        
-
-
-   
-
 
     }
+
+    private IEnumerator HandleEnemyDeath(GameObject enemyObject)
+    {
+        // Log to check if the death is being triggered
+        Debug.Log("Handling enemy death for: " + enemyObject.name);
+
+        // Play the death animation
+        enemyAnimation.PlayFiendDead();
+
+        // Log to check if the animation is being triggered
+        Debug.Log("Played FiendDead animation");
+
+        // Wait for 3 seconds (adjust based on animation duration)
+        yield return new WaitForSeconds(3f); // Adjust this duration based on your animation length
+
+        // Log to check if we're deactivating the enemy
+        Debug.Log("Deactivating enemy: " + enemyObject.name);
+
+        // Deactivate the enemy object after the animation is complete
+        enemyObject.SetActive(false);
+    }
+
+
 
 
 

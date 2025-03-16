@@ -38,7 +38,7 @@ public class GameFlowManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("EnemyPlayerSystem"); //Load tutorial
+        SceneManager.LoadScene("Level2Bomb"); //Load tutorial
         
     }
 

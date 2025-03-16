@@ -16,7 +16,6 @@ public class YettyAnimation : MonoBehaviour
     const string YETTY_MOVEMENT = "Movement"; // Default state
 
     public string currentState;
-
     public AudioManager audioManager;
 
     // Sound names 
@@ -24,6 +23,8 @@ public class YettyAnimation : MonoBehaviour
     const string YETTY_FOOTSTEPS = "YettyFootstep";
     const string YETTY_LOSE = "Lose";
 
+    public UIManager uiManager;
+    private bool isYettyStepsPlaying = false;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -41,6 +42,16 @@ public class YettyAnimation : MonoBehaviour
     public void UpdateMovementSpeed(float speed)
     {
         animator.SetFloat("speed", speed);
+        //Debug.Log("Yetty speed:" + speed);
+        if (speed > 0.05f && !isYettyStepsPlaying)
+        {
+            audioManager.Play(YETTY_FOOTSTEPS);
+            //Debug.Log("Playing YettyFootsteps");
+            isYettyStepsPlaying = true;
+        }
+        else if (speed <=0.5f && isYettyStepsPlaying)
+        {
+            isYettyStepsPlaying = false;        }
     }
 
     public void ChangeAnimationState(string newState)
@@ -62,14 +73,10 @@ public class YettyAnimation : MonoBehaviour
         currentState = newState;
     }
 
-    public void PlayYettyWalk()
-    {
-        ChangeAnimationState(YETTY_WALK);
-    }
 
     public void PlayYettyAttackStick()
     {
-        //audioManager.Play(YETTY_WOOSH);
+        audioManager.Play(YETTY_WOOSH);
         ChangeAnimationState(YETTY_ATTACK_STICK);
         StartCoroutine(ReturnToMovementDefault(YETTY_ATTACK_STICK));
     }
@@ -86,21 +93,11 @@ public class YettyAnimation : MonoBehaviour
         StartCoroutine(ReturnToMovementDefault(YETTY_IDLE_GRAB));
     }
 
-    public void PlayYettyIdleStick()
-    {
-        ChangeAnimationState(YETTY_IDLE_STICK);
-        StartCoroutine(ReturnToMovementDefault(YETTY_IDLE_STICK));
-    }
-
-    public void PlayYettyIdle()
-    {
-        ChangeAnimationState(YETTY_IDLE);
-    }
-
     public void PlayYettyDead()
     {
+        Debug.Log("1. Playing YettyLose from PlayYettyDead");
         audioManager.Play(YETTY_LOSE);
-        ChangeAnimationState(YETTY_DEAD);
+        //ChangeAnimationState(YETTY_DEAD);
     }
 
     private IEnumerator ReturnToMovementDefault(string currentAnimation)
@@ -135,4 +132,18 @@ public class YettyAnimation : MonoBehaviour
     {
         return animator.HasState(0, Animator.StringToHash(stateName));
     }
+
+    public IEnumerator HandleYettyDeath()
+    {
+        Debug.Log(" 2. Handling Yetty Death");
+        ChangeAnimationState(YETTY_DEAD);
+
+        float animationDuration = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animationDuration + 3f);
+        Debug.Log("3. 3secs later");
+
+        uiManager.CallGameOverCanvas();
+    }
+
+
 }

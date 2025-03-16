@@ -26,6 +26,9 @@ public class EnemyAnimation : MonoBehaviour
     const string FIEND_FOOTSTEPS = "FiendFootsteps";
     const string FIEND_BARK = "FiendBark";
 
+    //public gameObject gameOverUI;
+    public GameController gameManager;
+    private bool isFootstepSoundPlaying = false;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -46,41 +49,43 @@ public class EnemyAnimation : MonoBehaviour
         {
             animator.SetFloat("fiendSpeed", speed);
             //Debug.Log("Fiend Animator speed set to: " + speed);
-            /*if (speed > 0.5f)
+            if (speed > 0.5f && !isFootstepSoundPlaying)
             {
                 audioManager.Play(FIEND_FOOTSTEPS);
-                Debug.Log("Playing FiendFootsteps");
-            }*/
+                //Debug.Log("Playing FiendFootsteps");
+                isFootstepSoundPlaying = true;
+
+            }
+            else if(speed<= 0.5f && isFootstepSoundPlaying)
+            {
+                isFootstepSoundPlaying = false;
+            }
 
         }
     }
 
-    private void Update()
-    {
-        //AnimatorStateInf
-    }
     void ChangeAnimationState(string newState)
     {
-        // Stop the same animation from interrupting itself
+        if (animator == null)
+        {
+            Debug.LogWarning("Animator is missing!");
+            return;
+        }
+
         if (currentState == newState) return;
 
-        // Play the animation   
         animator.Play(newState);
-
-        // Reassign the current state
         currentState = newState;
     }
 
-    public void PlayFiendChase()
-    {
-        ChangeAnimationState(FIEND_CHASE);
-        audioManager.Play(FIEND_FOOTSTEPS);
-    }
 
     public void PlayFiendAttacked()
     {
         ChangeAnimationState(FIEND_ATTACKED);
+        Debug.Log("Played Fiend Attacked");
         audioManager.Play(FIEND_SNARL);
+
+        StartCoroutine(ReturnToDefaultState());
     }
 
     public void PlayFiendAttack()
@@ -97,27 +102,35 @@ public class EnemyAnimation : MonoBehaviour
     {
         ChangeAnimationState(FIEND_WALK);
         audioManager.Play(FIEND_FOOTSTEPS); 
-    }*/
-
+    }
     public void PlayFiendDead()
     {
         audioManager.Play(FIEND_WHIMPER);
         ChangeAnimationState(FIEND_DEAD);
     }
+    public void PlayFiendIdle()
+   {
+       ChangeAnimationState(FIEND_IDLE);
+   }*/
 
-    /*public void PlayFiendIdle()
+
+    public void PlayFiendDead()
     {
-        ChangeAnimationState(FIEND_IDLE);
-    }*/
+        audioManager.Play(FIEND_WHIMPER);
+        Debug.Log("CHANGED ANIM STATE FIEND DEAD");
+        ChangeAnimationState(FIEND_DEAD);
+    }
 
     private IEnumerator ReturnToDefaultState()
     {
+        Debug.Log("Returning to default state");
         // Wait for the duration of the attack animation.
         // It's more robust to use a set duration rather than reading the blend tree's current state's length.
-        float attackAnimationDuration = 1f; // Set this value to match your attack clip duration
+        float attackAnimationDuration = 2f; // Set this value to match your attack clip duration
         yield return new WaitForSeconds(attackAnimationDuration);
 
         isAttacking = false;
         ChangeAnimationState(FIEND_MOVEMENT);
     }
+
 }

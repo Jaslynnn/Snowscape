@@ -34,6 +34,7 @@ public class GameController : MonoBehaviour
     public AudioManager audioManager;
     public TutorialUIAnim tutorialUIAnim;
     public UIElementScaler uiElementScaler;
+    
 
   
     public enum GameStateEnums
@@ -85,6 +86,7 @@ public class GameController : MonoBehaviour
     {
         ChangeGameState();
         //uiManager.UpdateTestUI();
+        uiManager.UpdateFiendUI();
         CheckAllFiendsDead();
 
         //Put the checker for the buttons here
@@ -144,49 +146,51 @@ public class GameController : MonoBehaviour
 
 
     }
-
     public void ChangeGameState()
     {
         switch (State)
         {
             case GameStateEnums.NotStarted:
-                //playerMesh.transform.position = spawnPoint.transform.position;
-                //if the start button is pressed, start the game
                 StartCoroutine(TutorialCountdown());
                 break;
 
             case GameStateEnums.Tutorial:
                 if (playerAttack.actionState != PlayerAttack.PlayerActionStates.Attack)
                 {
-                    thirdPersonMovement.PlayerMovement(); 
+                    thirdPersonMovement.PlayerMovement();
                 }
-                
+
                 if (playerClass.playerHealth <= 0)
                 {
                     Debug.Log("Health = 0");
                     State = GameStateEnums.Ended;
                     playerClass.playerHealth = 0;
-                    //uiManager.ChangeToGameEndedAnimationState();
+                    yettyAnimation.PlayYettyDead();  // Play the Yetty dead animation
+                    StartCoroutine(HandleGameOver()); // Call coroutine to handle game over flow
                 }
-                //Play the tutorial
                 break;
 
             case GameStateEnums.Started:
-
                 break;
-   
 
             case GameStateEnums.Paused:
- 
                 break;
 
             case GameStateEnums.Ended:
-                // GameFlowManager.Instance.StartGame();
+                Debug.Log("Game Over: Health = 0");
                 break;
-
         }
-
     }
+
+    // Coroutine to trigger Yetty death animation and then show the Game Over UI
+    private IEnumerator HandleGameOver()
+    {
+        // Start the death animation and wait for it to finish
+        yield return StartCoroutine(yettyAnimation.HandleYettyDeath());
+        uiManager.CallGameOverCanvas();
+    }
+
+
 
 
     //State Changing Functions
@@ -263,41 +267,43 @@ public class GameController : MonoBehaviour
     public void CheckAllFiendsDead()
     {
         currentEnemyClass.currentNoOfFiends = playerClass.enemyDefeatedCounter;
-       
+
+        // Check if all fiends are defeated for the current level
+        if (playerClass.enemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
+        {
+            uiManager.CallLevelCompletedCanvas();
+            audioManager.Play("LevelCompleted");
             switch (Level)
             {
                 case LevelsStateEnums.None:
-                if (playerClass.enemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
-                {
-                    Level = LevelsStateEnums.Level1;
-
-                    //Use sceneLoader to go to the next level
-
-                    //GameFlowManager.Instance.LoadLevelSelection();
-                    playerClass.enemyDefeatedCounter = 0;
-
-                }
+                    Level = LevelsStateEnums.Level1; // Transition to Level 1
+                    levelCompletion.FinishLevel(0); // Finish current level (0)
+                    //GameFlowManager.Instance.LoadLevelSelection(); // Go to Level Selection
+                    playerClass.enemyDefeatedCounter = 0; // Reset enemy defeated counter
                     break;
 
                 case LevelsStateEnums.Level1:
-                if (playerClass.enemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
-                {
-                    Level = LevelsStateEnums.Level2;
-                }
+                    Level = LevelsStateEnums.Level2; // Transition to Level 2
+                    levelCompletion.FinishLevel(1); // Finish Level 1
+                    //GameFlowManager.Instance.LoadLevelSelection(); // Go to Level Selection
+                    playerClass.enemyDefeatedCounter = 0; // Reset enemy defeated counter
                     break;
 
                 case LevelsStateEnums.Level2:
-                if (playerClass.enemyDefeatedCounter == currentEnemyClass.totalNoOfFiends)
-                {
-                    Level = LevelsStateEnums.Level2;
-                }
+                    // If you are at the last level (Level 2) or want to add more levels, do something
+                    // For example, transitioning to a "congratulations" screen or game over
+                    levelCompletion.FinishLevel(2); // Finish Level 2
+                    //GameFlowManager.Instance.LoadLevelSelection(); // Go to Level Selection
+                    playerClass.enemyDefeatedCounter = 0; // Reset enemy defeated counter
                     break;
 
+                default:
+                    Debug.LogError("Unhandled level state.");
+                    break;
             }
-            //Take the totalFiends - playerClass.enemyDefeated
-            //If Fiends = 0 , Level 1 = true , show the congrats UI
-        
+        }
     }
+
 
     public void PlayAgain()
     {
