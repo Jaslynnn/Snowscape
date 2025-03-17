@@ -22,7 +22,7 @@ AssetImportWorker1
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-50971
+56604
 Successfully changed project path to: /Users/jaslyn/Documents/GitHub/Snowscape
 /Users/jaslyn/Documents/GitHub/Snowscape
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -56,12 +56,12 @@ Successfully changed project path to: /Users/jaslyn/Documents/GitHub/Snowscape
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [8385972288] Host "[IP] 192.168.0.131 [Port] 0 [Flags] 2 [Guid] 1239664466 [EditorId] 1239664466 [Version] 1048832 [Id] OSXEditor(0,Jaslyns-Macbook-pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [8385972288] Host "[IP] 192.168.0.131 [Port] 0 [Flags] 2 [Guid] 2208693194 [EditorId] 2208693194 [Version] 1048832 [Id] OSXEditor(0,Jaslyns-Macbook-pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [8385972288] Host "[IP] 192.168.0.131 [Port] 0 [Flags] 2 [Guid] 1239664466 [EditorId] 1239664466 [Version] 1048832 [Id] OSXEditor(0,Jaslyns-Macbook-pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [8385972288] Host "[IP] 192.168.0.131 [Port] 0 [Flags] 2 [Guid] 2208693194 [EditorId] 2208693194 [Version] 1048832 [Id] OSXEditor(0,Jaslyns-Macbook-pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with 11 workers.
-Refreshing native plugins compatible for Editor in 29.17 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 14.30 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.3.30f1 (70558241b701)
 [Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2022.3.30f1/Unity.app/Contents/Resources/UnitySubsystems
@@ -76,51 +76,51 @@ Initialize mono
 Mono path[0] = '/Applications/Unity/Hub/Editor/2022.3.30f1/Unity.app/Contents/Managed'
 Mono path[1] = '/Applications/Unity/Hub/Editor/2022.3.30f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit-macos'
 Mono config path = '/Applications/Unity/Hub/Editor/2022.3.30f1/Unity.app/Contents/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56285
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56427
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: /Applications/Unity/Hub/Editor/2022.3.30f1/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2022.3.30f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2022.3.30f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2022.3.30f1/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.006345 seconds.
-- Loaded All Assemblies, in  0.325 seconds
+Registered in 0.004757 seconds.
+- Loaded All Assemblies, in  0.246 seconds
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 296 ms
+Android Extension - Scanning For ADB Devices 272 ms
 Native extension for OSXStandalone target not found
 Native extension for WebGL target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.505 seconds
-Domain Reload Profiling: 831ms
-	BeginReloadAssembly (154ms)
+- Finished resetting the current domain, in  0.444 seconds
+Domain Reload Profiling: 690ms
+	BeginReloadAssembly (81ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (0ms)
+		CreateAndSetChildDomain (1ms)
 	RebuildCommonClasses (23ms)
 	RebuildNativeTypeToScriptingClass (7ms)
 	initialDomainReloadingComplete (34ms)
-	LoadAllAssembliesAndSetupDomain (107ms)
-		LoadAssemblies (154ms)
+	LoadAllAssembliesAndSetupDomain (100ms)
+		LoadAssemblies (81ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (105ms)
-			TypeCache.Refresh (100ms)
-				TypeCache.ScanAssembly (89ms)
+		AnalyzeDomain (98ms)
+			TypeCache.Refresh (97ms)
+				TypeCache.ScanAssembly (84ms)
 			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (4ms)
-	FinalizeReload (506ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (444ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (468ms)
+		SetupLoadedEditorAssemblies (413ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (365ms)
+			InitializePlatformSupportModulesInManaged (335ms)
 			SetLoadedEditorAssemblies (2ms)
 			RefreshPlugins (0ms)
 			BeforeProcessingInitializeOnLoad (1ms)
-			ProcessInitializeOnLoadAttributes (68ms)
-			ProcessInitializeOnLoadMethodAttributes (31ms)
+			ProcessInitializeOnLoadAttributes (54ms)
+			ProcessInitializeOnLoadMethodAttributes (21ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -128,8 +128,8 @@ Domain Reload Profiling: 831ms
 ========================================================================
 Worker process is ready to serve import requests
 Begin MonoManager ReloadAssembly
-- Loaded All Assemblies, in  0.626 seconds
-Refreshing native plugins compatible for Editor in 1.53 ms, found 3 plugins.
+- Loaded All Assemblies, in  0.561 seconds
+Refreshing native plugins compatible for Editor in 1.22 ms, found 3 plugins.
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
 Native extension for OSXStandalone target not found
@@ -139,48 +139,48 @@ Package Manager log level set to [2]
 [Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.485 seconds
-Domain Reload Profiling: 1111ms
-	BeginReloadAssembly (88ms)
+- Finished resetting the current domain, in  0.455 seconds
+Domain Reload Profiling: 1020ms
+	BeginReloadAssembly (104ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (3ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (22ms)
+		CreateAndSetChildDomain (28ms)
 	RebuildCommonClasses (21ms)
 	RebuildNativeTypeToScriptingClass (7ms)
-	initialDomainReloadingComplete (22ms)
-	LoadAllAssembliesAndSetupDomain (487ms)
-		LoadAssemblies (353ms)
+	initialDomainReloadingComplete (21ms)
+	LoadAllAssembliesAndSetupDomain (411ms)
+		LoadAssemblies (289ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (174ms)
-			TypeCache.Refresh (144ms)
-				TypeCache.ScanAssembly (117ms)
-			ScanForSourceGeneratedMonoScriptInfo (20ms)
-			ResolveRequiredComponents (8ms)
-	FinalizeReload (485ms)
+		AnalyzeDomain (157ms)
+			TypeCache.Refresh (134ms)
+				TypeCache.ScanAssembly (116ms)
+			ScanForSourceGeneratedMonoScriptInfo (14ms)
+			ResolveRequiredComponents (7ms)
+	FinalizeReload (455ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (352ms)
+		SetupLoadedEditorAssemblies (312ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (13ms)
+			InitializePlatformSupportModulesInManaged (11ms)
 			SetLoadedEditorAssemblies (3ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (47ms)
-			ProcessInitializeOnLoadAttributes (240ms)
-			ProcessInitializeOnLoadMethodAttributes (49ms)
+			BeforeProcessingInitializeOnLoad (49ms)
+			ProcessInitializeOnLoadAttributes (205ms)
+			ProcessInitializeOnLoadMethodAttributes (43ms)
 			AfterProcessingInitializeOnLoad (1ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (2ms)
 Launching external process: /Applications/Unity/Hub/Editor/2022.3.30f1/Unity.app/Contents/Tools/UnityShaderCompiler
-Launched and connected shader compiler UnityShaderCompiler after 0.08 seconds
-Refreshing native plugins compatible for Editor in 4.10 ms, found 3 plugins.
+Launched and connected shader compiler UnityShaderCompiler after 0.05 seconds
+Refreshing native plugins compatible for Editor in 1.53 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6119 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 112 unused Assets / (2.2 MB). Loaded Objects now: 6574.
-Memory consumption went from 256.5 MB to 254.3 MB.
-Total: 4.058667 ms (FindLiveObjects: 0.239833 ms CreateObjectMapping: 0.062625 ms MarkObjects: 3.290958 ms  DeleteObjects: 0.464583 ms)
+Unloading 6130 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 112 unused Assets / (332.4 KB). Loaded Objects now: 6582.
+Memory consumption went from 250.5 MB to 250.2 MB.
+Total: 3.236292 ms (FindLiveObjects: 0.215417 ms CreateObjectMapping: 0.065458 ms MarkObjects: 2.754209 ms  DeleteObjects: 0.200833 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
@@ -195,79 +195,3 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 134793.471835 seconds.
-  path: Assets/Character/Yetty/Animation/Anim_Yetty_Walk_02.fbx
-  artifactKey: Guid(40d02ca0a3772bc4d970c075a124bd2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Character/Yetty/Animation/Anim_Yetty_Walk_02.fbx using Guid(40d02ca0a3772bc4d970c075a124bd2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '74ba6e2215ac25cd811ea1f4afd56727') in 1.345574 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 213
-========================================================================
-Received Import Request.
-  Time since last request: 0.000100 seconds.
-  path: Assets/Character/Yetty/Yetty_Model_01.fbx
-  artifactKey: Guid(d81cc6a16ac8cf04295cec07cb6cd58a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Character/Yetty/Yetty_Model_01.fbx using Guid(d81cc6a16ac8cf04295cec07cb6cd58a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60ef25454d81674f28ed7ed1e74e9031') in 0.405630 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 210
-========================================================================
-Received Import Request.
-  Time since last request: 0.000054 seconds.
-  path: Assets/Character/Yetty/Animation/Anim_Yetty_Grab_01.fbx
-  artifactKey: Guid(e128378de2927b044a46c3b51567f780) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Character/Yetty/Animation/Anim_Yetty_Grab_01.fbx using Guid(e128378de2927b044a46c3b51567f780) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f37153ec7ec5c33cc737cb86e281d7e') in 0.061077 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 208
-========================================================================
-Received Import Request.
-  Time since last request: 0.000062 seconds.
-  path: Assets/Character/Yetty/Animation/Anim_Yetty_Dead_01.fbx
-  artifactKey: Guid(0356a753401da7740911b8025b7db8d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Character/Yetty/Animation/Anim_Yetty_Dead_01.fbx using Guid(0356a753401da7740911b8025b7db8d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45579abb554e14ff4af3fe3b55852bdc') in 0.048707 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 212
-========================================================================
-Received Import Request.
-  Time since last request: 0.000044 seconds.
-  path: Assets/Character/Fiend/Animation/Fiend_Idle_01.fbx
-  artifactKey: Guid(e6606ae8b6afc11489c0cdbd397590bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Character/Fiend/Animation/Fiend_Idle_01.fbx using Guid(e6606ae8b6afc11489c0cdbd397590bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8cfc5b3866069d9b07cd15e62ff00974') in 0.054594 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 99
-========================================================================
-Received Import Request.
-  Time since last request: 0.000045 seconds.
-  path: Assets/Character/Yetty/Animation/Anim_Yetty_Idle_Stick_01.fbx
-  artifactKey: Guid(d6685fda20c540742985daef4d1ee03f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Character/Yetty/Animation/Anim_Yetty_Idle_Stick_01.fbx using Guid(d6685fda20c540742985daef4d1ee03f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd14523498cd3a1cb9a097d1064141e15') in 0.043393 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 208
-========================================================================
-Received Import Request.
-  Time since last request: 0.000051 seconds.
-  path: Assets/Character/Fiend/Animation/Fiend_Walk_01.fbx
-  artifactKey: Guid(b0e8e587e7b2b2e4594d38cfebca099c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Character/Fiend/Animation/Fiend_Walk_01.fbx using Guid(b0e8e587e7b2b2e4594d38cfebca099c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f58ed3930cca025b5b1c2d47b9ff29a7') in 0.063629 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 99
-========================================================================
-Received Import Request.
-  Time since last request: 0.000036 seconds.
-  path: Assets/TestingAssets/Environment Placeholder/Environment_Level_V0001.fbx
-  artifactKey: Guid(d6d6d1e041791c54996eea4e6709b8fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/TestingAssets/Environment Placeholder/Environment_Level_V0001.fbx using Guid(d6d6d1e041791c54996eea4e6709b8fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b4c253f512744cae9b8fa351063aaca4') in 0.358003 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 1137
-========================================================================
-Received Import Request.
-  Time since last request: 2.219104 seconds.
-  path: Assets/Assets/snowBomb/MAT_bomb_fuse.mat
-  artifactKey: Guid(9e8c69777634b494aa722f8e21c7054b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Assets/snowBomb/MAT_bomb_fuse.mat using Guid(9e8c69777634b494aa722f8e21c7054b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e8f2739a208a685750307c144c9eebf9') in 0.011129 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 2
-Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
-TcpMessagingSession - receive error: operation aborted. errorcode: 89, details: Operation aborted.
-AssetImportWorker is now disconnected from the server
-Process exiting

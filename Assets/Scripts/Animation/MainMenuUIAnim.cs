@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,12 +50,18 @@ public class MainMenuUIAnim : MonoBehaviour
         FadeOutPanelFalse();
 
     }
+
+    private void FixedUpdate()
+    {
+        //StartTitleFloating();
+    }
+
     void Start()
     {
         // Start floating effect for title
         blackPanel.gameObject.SetActive(true);
         StartCoroutine(StartMenuCoroutine());
-        StartTitleFloating();
+        //StartTitleFloating();
         
         
 

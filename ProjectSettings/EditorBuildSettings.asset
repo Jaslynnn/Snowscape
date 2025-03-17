@@ -11,16 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level2Bomb.unity
     guid: 9450b101993954adda9eb774b0d91301
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LevelSelection.unity
     guid: d4da102bb6c4c9849a938684be502e7d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PlaceholderLevel1.unity
     guid: 93cf02bbf14b9aa4ab8d86479d4207e8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PlaceholderLevel2.unity
     guid: d2f51b6c367051f4a8170f3ab58c8cad
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PlaceholderLevel3.unity
     guid: beded2d6e19075f4ab7274279aafd310
   m_configObjects: {}
